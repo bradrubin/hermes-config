@@ -38,8 +38,13 @@ Brad's standing preferences:
    Use mocks or a fake `post()` for paid APIs. Browser scripts can use the real Chrome at 127.0.0.1:9222:
    open your own tab and close it after; never touch tabs Hermes might be using.
 4. Test end to end through Hermes with the local Qwen model, in a fresh session so old skill versions in
-   context don't leak in. Look in `hermes --help` for a one-shot or non-interactive mode; once you know the
-   exact command, add it here. Qwen runs take minutes. Hermes's logs are under `~/.hermes/logs/`.
+   context don't leak in. One-shot (each run is a new session; prints only the final reply):
+   `hermes -z "<message>" --usage-file <scratch>/usage.json`
+   The usage JSON gives model, api_calls, tokens and `session_id` (find the run in `hermes sessions`).
+   Approvals are auto-bypassed in -z mode, so only send prompts you'd let run unattended. AGENTS.md in the
+   CWD is loaded, so run from a neutral dir. For prompts with quotes or `$`, use
+   `hermes chat --query-file <file> -Q` instead. A trivial prompt takes ~25s; skill runs take minutes.
+   Hermes's logs are under `~/.hermes/logs/`.
 5. Brad does the final check in Telegram. Tell him exactly what to send (after `/new`) and what he should see.
 6. Ask Brad first before you: change `config.yaml`, cron jobs or LaunchAgents; run `hermes gateway restart`
    (it interrupts Telegram); draft or send email; or run anything that acts on his real accounts
