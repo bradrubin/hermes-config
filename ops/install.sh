@@ -6,7 +6,7 @@
 #  2. Makes ~/.hermes a git repo (whitelist .gitignore, secret-blocking pre-commit hook) and commits.
 #  3. Installs Claude Code (native installer, into ~/.local/bin; no admin needed) and an `hdev` shortcut.
 #  4. With a repo name: makes a deploy key, waits while you add it on GitHub, then pushes.
-#  5. Adds a nightly backup (3:13 am) to hermes's crontab.
+#  5. Adds a nightly backup (1:00 am) to hermes's crontab.
 set -e
 KIT="$(cd "$(dirname "$0")" && pwd)"
 H="${HERMES_HOME:-$HOME/.hermes}"
@@ -116,10 +116,10 @@ if [ -n "$REPO" ]; then
   echo "pushed to github.com/$REPO"
 
   step "5. Nightly backup"
-  LINE="13 3 * * * /bin/bash $H/ops/backup.sh >> $HOME/Library/Logs/hermes-backup.log 2>&1"
+  LINE="0 1 * * * /bin/bash $H/ops/backup.sh >> $HOME/Library/Logs/hermes-backup.log 2>&1"
   mkdir -p "$HOME/Library/Logs"
   if crontab -l 2>/dev/null | grep -q 'ops/backup.sh'; then echo "already in crontab"
-  else (crontab -l 2>/dev/null; echo "$LINE") | crontab - && echo "added to crontab: 3:13 am daily"; fi
+  else (crontab -l 2>/dev/null; echo "$LINE") | crontab - && echo "added to crontab: 1:00 am daily"; fi
 else
   echo; echo "(No repo given: skipped GitHub and nightly backup. Rerun with <github-user>/<repo> to add them.)"
 fi
