@@ -198,7 +198,7 @@
       "last_delivery_unverified": null,
       "last_failure": null,
       "failure_streak": 0,
-      "deliver": "local",
+      "deliver": "telegram",
       "origin": null,
       "enabled_toolsets": null,
       "workdir": null,
@@ -253,7 +253,7 @@
       "last_delivery_unverified": null,
       "last_failure": null,
       "failure_streak": 0,
-      "deliver": "local",
+      "deliver": "telegram",
       "origin": null,
       "enabled_toolsets": null,
       "workdir": null
@@ -404,5 +404,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-10-30T14:12:07.425753-05:00"
+  "updated_at": "2026-10-30T14:15:09.001485-05:00"
 }

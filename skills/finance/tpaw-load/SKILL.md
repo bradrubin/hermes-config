@@ -1,7 +1,7 @@
 ---
 name: tpaw-load
 description: Run TPAW plan; report stocks % and spending
-version: 3.2.0
+version: 3.2.1
 author: Hermes Agent
 ---
 
@@ -19,7 +19,7 @@ Put what the user gave between the quotes of ARGS:
 - A dollar amount: digits only, e.g. `ARGS = "1468825"`.
 - Nothing given: leave it as `ARGS = ""`.
 
-Your final reply is exactly the lines between `REPLY START` and `REPLY END`, copied character for character. Nothing else.
+The script's output has a line `REPLY START`, then the reply, then a line `REPLY END`. Your final reply is only the lines in between, copied character for character (including the `MEDIA:` line). Do NOT write the `REPLY START` or `REPLY END` lines themselves. Nothing else.
 
 ## Rules
 
