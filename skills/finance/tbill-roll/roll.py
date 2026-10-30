@@ -8,8 +8,13 @@ One call does everything:
   4. match: issue date == old maturity, same term in weeks; chain if the replacement also matured
   5. write a tab-separated file of new rows (columns A-Q, formulas for rows 2..N+1)
 Always prints a complete REPLY START / REPLY END block, also on failure.
+Argument "cron" (scheduled runs): reply only when there is a new row, a warning, or a reinvestment window
+that has not been announced before; otherwise a one-line [SILENT]. A failure starts with [CRON_FAILURE].
+Argument "script" (the no_agent cron job, run by ~/.hermes/scripts/tbill_roll.py): same rules as cron, but no
+Qwen in the loop: a quiet run prints nothing, a failure prints the reason and exits 1, an alert prints plainly.
+Without "cron" (chat) everything is shown every time and no state is written.
 """
-import csv, datetime as dt, glob, json, os, re, subprocess, sys, time, urllib.request
+import csv, datetime as dt, glob, json, os, re, subprocess, sys, time, urllib.error, urllib.request
 
 SKILL_DIR = os.path.dirname(os.path.abspath(__file__))
 ATTACH_DIR = "/Users/hermes/.hermes/attachments"
@@ -28,6 +33,8 @@ class Stop(Exception):
 T0 = time.time()
 MARKS = []
 PHASES = ("sheet", "treasury", "write")
+STATE_DIR = os.environ.get("TBILL_STATE_DIR", "/Users/hermes/.hermes/state/tbill-roll")
+WINDOW_FILE = "windows_announced.json"   # cron runs: windows already alerted, so only the first day alerts
 WINDOW_DAYS = 6   # maturity within this many days: the window to add to an auto-roll position is open
 
 
@@ -227,8 +234,19 @@ def read_sheet(cfg):
 # ---------------- Treasury auctions ----------------
 def fetch_json(url):
     req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
-    with urllib.request.urlopen(req, timeout=45) as resp:
-        return json.loads(resp.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=45) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.URLError as e:
+        # Hermes's cron Python (OpenSSL 3.5) rejects Treasury's certificate chain with "self-signed certificate
+        # in certificate chain"; macOS's own curl (system trust store) accepts it.
+        if "CERTIFICATE_VERIFY_FAILED" not in str(e) or not os.path.exists("/usr/bin/curl"):
+            raise
+        r = subprocess.run(["/usr/bin/curl", "-sS", "-m", "45", "-A", UA, "-H", "Accept: application/json", url],
+                           capture_output=True, timeout=60)
+        if r.returncode != 0:
+            raise urllib.error.URLError(f"curl exit {r.returncode}: {r.stderr.decode('utf-8', 'replace')[:80]}")
+        return json.loads(r.stdout.decode("utf-8"))
 
 
 def pick(d, *keys):
@@ -242,8 +260,8 @@ def pick(d, *keys):
 def normalize(rec):
     issue = parse_date(pick(rec, "issueDate", "issue_date"))
     mat = parse_date(pick(rec, "maturityDate", "maturity_date"))
-    high = parse_num(pick(rec, "highDiscountRate", "high_discnt_rate"))
-    inv = parse_num(pick(rec, "highInvestmentRate", "high_investment_rate"))
+    high = parse_num(pick(rec, "highDiscountRate", "high_discnt_rate", "highRate"))
+    inv = parse_num(pick(rec, "highInvestmentRate", "high_investment_rate", "investmentRate"))
     cusip = str(pick(rec, "cusip") or "").strip().upper()
     if not (issue and mat and cusip and high is not None and inv is not None):
         return None
@@ -252,7 +270,7 @@ def normalize(rec):
     m = re.match(r"(\d+)\s*-?\s*week", term.lower())
     return {"cusip": cusip, "issue": issue, "maturity": mat, "high": float(high), "inv": float(inv),
             "term_weeks": int(m.group(1)) if m else None, "term": term, "cmb": cmb in ("yes", "true", "y"),
-            "auction": parse_date(pick(rec, "auctionDate", "auction_date"))}
+            "auction": parse_date(pick(rec, "auctionDate", "auction_date", "competitiveAuctionCloseDate"))}
 
 
 def load_auctions(since, today):
@@ -260,6 +278,7 @@ def load_auctions(since, today):
     errors = []
     sources = [("TreasuryDirect", TA_WS.format(days=days)),
                ("Fiscal Data", FISCAL.format(since=(since - dt.timedelta(days=7)).isoformat()))]
+    empty = None
     for name, url in sources:
         try:
             data = fetch_json(url)
@@ -268,7 +287,11 @@ def load_auctions(since, today):
             continue
         recs = data.get("data", []) if isinstance(data, dict) else data
         out = [n for n in (normalize(r) for r in recs if isinstance(r, dict)) if n]
-        return out, name, len(recs)
+        if out:
+            return out, name, len(recs)
+        empty = empty or (out, name, len(recs))   # no usable results (field names changed?): try the next source
+    if empty:
+        return empty
     raise Stop("couldn't download auction results (" + "; ".join(errors) + ")")
 
 
@@ -324,7 +347,25 @@ def write_tsv(new_rows):
 
 
 # ---------------- main ----------------
-def run(today):
+def load_announced():
+    try:
+        with open(os.path.join(STATE_DIR, WINDOW_FILE)) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+    except (OSError, ValueError) as e:
+        raise Stop(f"{WINDOW_FILE} unreadable ({e})")
+
+
+def save_announced(d):
+    os.makedirs(STATE_DIR, exist_ok=True)
+    tmp = os.path.join(STATE_DIR, WINDOW_FILE + ".tmp")
+    with open(tmp, "w") as f:
+        json.dump(d, f, indent=1, sort_keys=True)
+    os.replace(tmp, os.path.join(STATE_DIR, WINDOW_FILE))
+
+
+def run(today, cron=False):
     cfg = settings()
     rows = read_sheet(cfg)
     mark("sheet")
@@ -376,6 +417,12 @@ def run(today):
     future += [x for x in new_rows if x["maturity"] > today and (x["fund"], x["maturity"]) not in rolled]
 
     new_rows.sort(key=lambda x: (x["settle"], x["fund"]), reverse=True)
+    window = sorted((x for x in future if (x["maturity"] - today).days <= WINDOW_DAYS),
+                    key=lambda x: (x["maturity"], x["fund"]))
+    fresh, announced = window, None
+    if cron:  # cron alerts only the first day a window is open; chat runs always show it and never record
+        announced = load_announced()
+        fresh = [x for x in window if f"{x['fund']}|{x['cusip']}|{x['maturity']}" not in announced]
     lines, path = [], None
     if new_rows:
         path = write_tsv(new_rows)
@@ -392,20 +439,24 @@ def run(today):
         placeholders = [r for r in rows if not r["settle"] and any(r["cusip"] == x["cusip"] for x in new_rows)]
         for p in placeholders:
             lines.append(f"Row {p['row']} already has {p['cusip']} without dates. Delete it before inserting.")
-    else:
+    elif not cron:
         lines.append("T-bill roll: no new rows. Every auto-roll bill that has matured already has its replacement in the sheet.")
     lines += warnings
-    window = sorted((x for x in future if (x["maturity"] - today).days <= WINDOW_DAYS),
-                    key=lambda x: (x["maturity"], x["fund"]))
-    for x in window:
+    for x in fresh:
         d = (x["maturity"] - today).days
         lines.append(f"REINVESTMENT WINDOW OPEN: {x['cusip']} ({x['fund']}, quantity {fmt_qty(x['qty'])}) "
                      f"matures {fmt_date(x['maturity'])}, in {d} day{'s' if d != 1 else ''}. "
                      "You can add to this position before it rolls.")
-    if future and not window:
+    if future and not window and not cron:
         nxt = min(future, key=lambda x: x["maturity"])
         lines.append(f"Next roll: {nxt['cusip']} ({nxt['fund']}) matures {fmt_date(nxt['maturity'])}. "
                      "Its replacement isn't auctioned yet.")
+    if cron:
+        for x in fresh:
+            announced[f"{x['fund']}|{x['cusip']}|{x['maturity']}"] = today.isoformat()
+        for k in [k for k in announced if k.rsplit("|", 1)[1] < (today - dt.timedelta(days=60)).isoformat()]:
+            del announced[k]   # long matured: forget it
+        save_announced(announced)
     mark("write")
     try:
         os.makedirs(WORK_DIR, exist_ok=True)
@@ -418,15 +469,35 @@ def run(today):
 
 def main():
     today = dt.date.today()
-    if len(sys.argv) > 1 and re.fullmatch(r"\d{4}-\d{2}-\d{2}", sys.argv[1]):
-        today = dt.date.fromisoformat(sys.argv[1])   # for testing
+    args = sys.argv[1:]
+    script = "script" in args   # no_agent cron job: no model. Silent = no output, failure = exit 1, else print the alert
+    cron = "cron" in args or script   # cron: quiet unless there is something new to act on; failures get [CRON_FAILURE]
+    for a in args:
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", a):
+            today = dt.date.fromisoformat(a)   # for testing
+    failed = False
     try:
-        lines, path = run(today)
+        lines, path = run(today, cron)
     except Stop as e:
-        lines, path = [f"T-bill roll failed: {e}"], None
+        lines, path, failed = [f"T-bill roll failed: {e}"], None, True
     except Exception as e:
-        lines, path = [f"T-bill roll failed: {type(e).__name__}: {str(e)[:200]}"], None
-    lines.append(timing_line())
+        lines, path, failed = [f"T-bill roll failed: {type(e).__name__}: {str(e)[:200]}"], None, True
+    tl = timing_line()
+    if script:
+        if failed:
+            print("\n\n".join(lines + [tl]))
+            sys.exit(1)
+        if lines:
+            print("\n\n".join(lines + [tl]))
+            if path:
+                print(f"\nMEDIA:{path}")
+        return
+    if cron and failed:
+        lines.insert(0, "[CRON_FAILURE]")
+    if cron and not lines:
+        lines = [f"[SILENT] T-bill roll: nothing new. {tl}"]   # one line: Qwen drops a separate TIMING line
+    else:
+        lines.append(tl)
     print("REPLY START")
     print("\n\n".join(lines))
     if path:

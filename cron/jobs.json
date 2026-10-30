@@ -261,16 +261,14 @@
     {
       "id": "f1b2b1ee8db4",
       "name": "tbill-roll",
-      "prompt": "Run the tbill-roll skill: execute `python3 /Users/hermes/.hermes/skills/finance/tbill-roll/roll.py` and report the output exactly as-is.",
-      "skills": [
-        "tbill-roll"
-      ],
-      "skill": "tbill-roll",
+      "prompt": "Run the tbill-roll skill for the scheduled cron run.",
+      "skills": [],
+      "skill": null,
       "model": null,
       "provider": null,
       "base_url": null,
-      "script": null,
-      "no_agent": false,
+      "script": "tbill_roll.py",
+      "no_agent": true,
       "monitor_script": null,
       "monitor_url": null,
       "monitor_state": null,
@@ -283,7 +281,7 @@
       "schedule_display": "every day at 4am",
       "repeat": {
         "times": null,
-        "completed": 1
+        "completed": 5
       },
       "enabled": true,
       "state": "scheduled",
@@ -291,14 +289,17 @@
       "paused_reason": null,
       "created_at": "2026-10-29T12:43:54.140971-05:00",
       "next_run_at": "2026-10-31T04:00:00-05:00",
-      "last_run_at": "2026-10-30T04:00:40.730028-05:00",
+      "last_run_at": "2026-10-30T14:34:11.030857-05:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
       "last_delivery_unverified": null,
-      "last_failure": null,
+      "last_failure": {
+        "at": "2026-10-30T14:33:11.565257-05:00",
+        "detail": "Script exited with code 1\nstdout:\nT-bill roll failed: couldn't download auction results (TreasuryDirect: URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-; Fiscal Data: URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-)\n\nTIMING: total 0.6s (sheet 0.6s)"
+      },
       "failure_streak": 0,
-      "deliver": "local",
+      "deliver": "telegram",
       "origin": null,
       "enabled_toolsets": null,
       "workdir": null,
@@ -404,5 +405,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-10-30T14:20:10.029383-05:00"
+  "updated_at": "2026-10-30T14:34:11.032005-05:00"
 }

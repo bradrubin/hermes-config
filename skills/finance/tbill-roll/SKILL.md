@@ -1,7 +1,7 @@
 ---
 name: tbill-roll
 description: Find replacement T-bills for auto-rolled bills
-version: 1.1.0
+version: 1.2.0
 author: Hermes Agent
 ---
 
@@ -15,7 +15,13 @@ This skill is ONE tool call. Call `terminal` once with exactly this command:
 python3 /Users/hermes/.hermes/skills/finance/tbill-roll/roll.py
 ```
 
-Your final reply is exactly the lines between `REPLY START` and `REPLY END`, copied character for character, including the `MEDIA:` line if there is one. Nothing else. The dates, rates and row counts must stay exact, and without the `MEDIA:` prefix the user gets no file.
+The scheduled nightly run does not use this skill: it is a script-only cron job (`~/.hermes/scripts/tbill_roll.py`, no model) that alerts on Telegram only when there is a new row, a warning, or a reinvestment window that opened for the first time.
+
+The script's output has a line `REPLY START`, then the reply, then a line `REPLY END`. Your final reply is only the lines in between, copied character for character, including the `MEDIA:` line if there is one.
+
+- Do NOT write the `REPLY START` or `REPLY END` lines themselves. The first character of your reply is the first character of the line after `REPLY START`.
+- Add nothing after the last line: no explanation, no advice, no question, even when the reply says "failed".
+- The dates, rates and row counts must stay exact, and without the `MEDIA:` prefix the user gets no file.
 
 ## Rules
 
