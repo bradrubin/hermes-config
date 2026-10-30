@@ -161,7 +161,7 @@
     {
       "id": "19cfd6249997",
       "name": "TPAW load - Monday 3 AM",
-      "prompt": "Run skill tpaw-load with no arguments.",
+      "prompt": "Run skill tpaw-load for the scheduled cron run (use the cron form of ARGS).",
       "skills": [
         "tpaw-load"
       ],
@@ -216,7 +216,7 @@
     {
       "id": "9816bae39755",
       "name": "TPAW load - 1st of month 3 AM",
-      "prompt": "Run skill tpaw-load with no arguments.",
+      "prompt": "Run skill tpaw-load for the scheduled cron run (use the cron form of ARGS).",
       "skills": [
         "tpaw-load"
       ],
@@ -404,5 +404,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-10-30T14:15:09.001485-05:00"
+  "updated_at": "2026-10-30T14:16:14.958361-05:00"
 }

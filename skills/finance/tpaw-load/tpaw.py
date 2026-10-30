@@ -1,12 +1,16 @@
 # tpaw-load v3: the whole skill in one browser_exec call.
 #   ARGS = "1468825"; exec(open("/Users/hermes/.hermes/skills/finance/tpaw-load/tpaw.py").read(), globals())
 # ARGS (optional): a dollar amount for the new portfolio balance and/or a plan .txt path.
+# ARGS word "cron": on failure the reply starts with [CRON_FAILURE] (Hermes then records the run as failed).
 # Always ends by printing a REPLY START / REPLY END block, even on failure.
 # Everything lives inside one function so it doesn't clutter the browser session's globals,
 # and nothing is imported from the skill folder (the session caches imports across calls).
 
 def _tpaw_main(args):
     import base64, copy, csv, datetime, json, os, re, time, uuid
+
+    cron = bool(re.search(r"\bcron\b", str(args or "").lower()))   # cron run: a failure gets [CRON_FAILURE] on line 1
+    args = re.sub(r"\bcron\b", "", str(args or ""), flags=re.I).strip()
 
     SKILL_DIR = "/Users/hermes/.hermes/skills/finance/tpaw-load"   # exec() has no __file__
     ATTACH_DIR = "/Users/hermes/.hermes/attachments"
@@ -600,6 +604,8 @@ def _tpaw_main(args):
     if shot:
         lines += ["", f"MEDIA:{shot}"]
 
+    if cron and not ok:
+        lines.insert(0, "[CRON_FAILURE]")
     print("REPLY START")
     print("\n".join(lines))
     print("REPLY END")
