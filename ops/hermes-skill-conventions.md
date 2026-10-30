@@ -82,7 +82,6 @@ When one step failed, Qwen read the scripts, hand-wrote JSON, clicked around the
 - Keep user-edited lists and long-lived state in `/Users/hermes/.hermes/state/<skill>/`, not the skill folder. A skill seeds those files only if they're missing.
 - `[SILENT]` and `[CRON_FAILURE]` only work as the very first thing in the reply (cron/scheduler.py, gateway/response_filters.py: `[SILENT]` must start the reply or be its own first/last line; `[CRON_FAILURE]` must be line 1). Qwen copied the literal `REPLY START` / `REPLY END` lines from "exactly the lines between", which would deliver every quiet night. SKILL.md must say "Do NOT write the REPLY START or REPLY END lines; the first character of your reply is the first character after REPLY START". Test with `hermes -z "This is a scheduled cron run. Run the <skill> skill."` and check the first characters of the output (`cat -v`).
 - Qwen drops a separate TIMING line from a `[SILENT]` reply; the script puts the TIMING on the same line as `[SILENT]`.
-- amazon-price-watch v1.0.2's SKILL.md still has the older "exactly the lines between" wording.
 - See amazon-price-watch v1.0.0 (`price_watch.py`) for the reference implementation.
 
 ## Salesforce PWA Kit storefronts (learned from duluth-price-watch)

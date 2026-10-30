@@ -50,9 +50,12 @@ def _pw_main():
         except Exception:
             pass
         print("REPLY START")
+        if lines and lines[0].startswith("[SILENT]"):
+            lines = [f"{lines[0]} {tl}"]  # one line: Qwen drops a separate TIMING line from a silent reply
+        else:
+            lines = lines + [tl]
         for ln in lines:
             print(ln)
-        print(tl)
         print("REPLY END")
 
     def fail(reason):
