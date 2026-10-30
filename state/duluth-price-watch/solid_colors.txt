@@ -8,6 +8,8 @@ solid|Blue Mercury
 solid|Burgundy
 solid|Brilliant Orange
 solid|Pine Green
+solid|Army Green Heather
+solid|Black Heather
 pattern|Fowl Language
 pattern|Holiday Train
 pattern|Honey Badger
