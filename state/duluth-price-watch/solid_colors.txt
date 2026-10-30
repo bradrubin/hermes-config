@@ -1,0 +1,20 @@
+# One color per line: solid|<color name>  or  pattern|<color name>  (names match case-insensitively).
+# solid = a plain color. pattern = a print or graphic. A color that is not listed here is reported
+# as "not sure" if it reaches the price limit, so a new color can never be missed.
+solid|Black
+solid|Graphite
+solid|Dark Cobalt
+solid|Blue Mercury
+solid|Burgundy
+solid|Brilliant Orange
+solid|Pine Green
+pattern|Fowl Language
+pattern|Holiday Train
+pattern|Honey Badger
+pattern|Knotty
+pattern|Balsam Green Cabin Wall
+pattern|Cosmic Bowl
+pattern|Miller High Life
+pattern|Movie Theater
+pattern|Venus Fly Trap
+pattern|WD-40

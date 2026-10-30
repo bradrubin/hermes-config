@@ -1,0 +1,545 @@
+{
+ "run_at": "2026-10-30T14:10:04",
+ "limit": 18.0,
+ "test": true,
+ "colors": [
+  {
+   "pid": "81316",
+   "product": "Men's Buck Naked Performance Boxers",
+   "code": "AHR",
+   "color": "Army Green Heather",
+   "kind": "unknown",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=AHR",
+   "all_sizes": true
+  },
+  {
+   "pid": "81316",
+   "product": "Men's Buck Naked Performance Boxers",
+   "code": "BAH",
+   "color": "Black Heather",
+   "kind": "unknown",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=BAH",
+   "all_sizes": true
+  },
+  {
+   "pid": "81316",
+   "product": "Men's Buck Naked Performance Boxers",
+   "code": "BLK",
+   "color": "Black",
+   "kind": "solid",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=BLK",
+   "all_sizes": true
+  },
+  {
+   "pid": "81316",
+   "product": "Men's Buck Naked Performance Boxers",
+   "code": "BMY",
+   "color": "Blue Mercury",
+   "kind": "solid",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=BMY",
+   "all_sizes": true
+  },
+  {
+   "pid": "81316",
+   "product": "Men's Buck Naked Performance Boxers",
+   "code": "DCB",
+   "color": "Dark Cobalt",
+   "kind": "solid",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=DCB",
+   "all_sizes": true
+  },
+  {
+   "pid": "81316",
+   "product": "Men's Buck Naked Performance Boxers",
+   "code": "FWU",
+   "color": "Fowl Language",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=FWU",
+   "all_sizes": true
+  },
+  {
+   "pid": "81316",
+   "product": "Men's Buck Naked Performance Boxers",
+   "code": "GPH",
+   "color": "Graphite",
+   "kind": "solid",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=GPH",
+   "all_sizes": true
+  },
+  {
+   "pid": "81316",
+   "product": "Men's Buck Naked Performance Boxers",
+   "code": "HDT",
+   "color": "Holiday Train",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=HDT",
+   "all_sizes": true
+  },
+  {
+   "pid": "81316",
+   "product": "Men's Buck Naked Performance Boxers",
+   "code": "HVB",
+   "color": "Honey Badger",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=HVB",
+   "all_sizes": false
+  },
+  {
+   "pid": "81316",
+   "product": "Men's Buck Naked Performance Boxers",
+   "code": "KNO",
+   "color": "Knotty",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=KNO",
+   "all_sizes": false
+  },
+  {
+   "pid": "81316",
+   "product": "Men's Buck Naked Performance Boxers",
+   "code": "LGW",
+   "color": "Balsam Green Cabin Wall",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=LGW",
+   "all_sizes": false
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "AHR",
+   "color": "Army Green Heather",
+   "kind": "unknown",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=AHR",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "BAH",
+   "color": "Black Heather",
+   "kind": "unknown",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=BAH",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "BLK",
+   "color": "Black",
+   "kind": "solid",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=BLK",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "BMY",
+   "color": "Blue Mercury",
+   "kind": "solid",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=BMY",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "BOR",
+   "color": "Brilliant Orange",
+   "kind": "solid",
+   "price": null,
+   "sizes": [],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=BOR"
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "BUR",
+   "color": "Burgundy",
+   "kind": "solid",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=BUR",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "CXQ",
+   "color": "Cosmic Bowl",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=CXQ",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "DCB",
+   "color": "Dark Cobalt",
+   "kind": "solid",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=DCB",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "FWU",
+   "color": "Fowl Language",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=FWU",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "GPH",
+   "color": "Graphite",
+   "kind": "solid",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=GPH",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "HDT",
+   "color": "Holiday Train",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=HDT",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "HVB",
+   "color": "Honey Badger",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=HVB",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "KNO",
+   "color": "Knotty",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=KNO",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "LGW",
+   "color": "Balsam Green Cabin Wall",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=LGW",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "MHL",
+   "color": "Miller High Life",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "MED",
+    "LRG",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=MHL",
+   "all_sizes": false
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "MVI",
+   "color": "Movie Theater",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=MVI",
+   "all_sizes": false
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "PGR",
+   "color": "Pine Green",
+   "kind": "solid",
+   "price": null,
+   "sizes": [],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=PGR"
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "VFT",
+   "color": "Venus Fly Trap",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "SM",
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=VFT",
+   "all_sizes": true
+  },
+  {
+   "pid": "76015",
+   "product": "Men's Buck Naked Performance Boxer Briefs",
+   "code": "WD4",
+   "color": "WD-40",
+   "kind": "pattern",
+   "price": 17.47,
+   "sizes": [
+    "MED",
+    "LRG",
+    "XLG",
+    "2XL"
+   ],
+   "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=WD4",
+   "all_sizes": false
+  }
+ ]
+}
