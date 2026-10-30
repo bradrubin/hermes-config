@@ -1,0 +1,11 @@
+timestamp,ok,total_s,phases
+2026-10-18T13:36:10,True,14.5,page_load=10.9; file_set=0.0; plan_render=1.1; save=0.4; report=2.1
+2026-10-18T14:05:31,False,2.1,patch=0.0; page_load=1.6; file_set=0.0; verify=0.5
+2026-10-18T14:13:24,True,2.7,patch=0.0; page_load=1.4; file_set=0.0; plan_render=0.8; verify=0.5
+2026-10-18T14:34:46,True,5.1,patch=0.0; page_load=1.7; file_set=0.0; plan_render=0.8; chart=2.5; tasks=0.0; verify=0.0
+2026-10-18T20:31:33,True,6.2,sheet=0.8; patch=0.0; page_load=1.8; file_set=0.0; plan_render=1.1; chart=2.5; tasks=0.0; verify=0.0
+2026-10-26T03:00:35,False,2.7,sheet=2.7; verify=0.0
+2026-10-26T10:45:04,False,2.4,sheet=2.4; verify=0.0
+2026-10-26T10:50:11,False,0.0,verify=0.0
+2026-10-26T10:59:20,True,9.5,sheet=2.1; patch=0.0; page_load=1.8; file_set=0.0; plan_render=1.7; chart=3.9; tasks=0.0; verify=0.0
+2026-10-30T12:47:38,True,10.2,sheet=3.9; patch=0.0; page_load=1.6; file_set=0.0; plan_render=1.2; chart=3.4; tasks=0.0; verify=0.0

@@ -1,0 +1,4 @@
+run_at,mode,status,total_s,phases
+2026-10-30 11:19:20,chat,failed,0.8,"failed 0.8s"
+2026-10-30 12:12:21,chat,failed,0.9,"failed 0.9s"
+2026-10-30 12:38:56,chat,no_drops,60.7,"page_load 2.4s; fetch 58.3s; compare 0.0s"

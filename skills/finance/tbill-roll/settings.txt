@@ -1,0 +1,10 @@
+# tbill-roll settings. Read with the Hermes Google Workspace skill:
+#   google_api.py sheets get <sheet_id> "<sheet>!A1:F"
+sheet_id = 1Eoaa9-Z-zbBLAhz6LF9cN_aw4iW1b769Mz_5PxQZcJE
+sheet = Treasuries
+# Only auto-roll (AR) bills that matured in the last this-many days are checked.
+lookback_days = 60
+# Optional. If blank, the values in tpaw-load's balance_source.txt are used,
+# and if that's blank too, the script searches ~/.hermes/skills/ for google_api.py.
+google_api =
+python =

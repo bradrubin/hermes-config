@@ -1,0 +1,5 @@
+# Full path to the TPAW plan export to load by default (first non-comment line is used).
+# EDIT THIS LINE to point at your real file. Spaces in the name are fine, no quotes needed.
+# Keep it OUTSIDE ~/Documents, ~/Desktop and ~/Downloads: macOS blocks those folders for
+# scheduled (cron) runs. ~/.hermes/data/ works.
+/Users/hermes/.hermes/data/TPAW Plan 2026.txt

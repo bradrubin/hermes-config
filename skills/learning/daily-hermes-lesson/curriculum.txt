@@ -1,0 +1,184 @@
+# Daily Hermes Lesson curriculum. One block per topic, taught in this order.
+# Built from this install's tool list (all_tools_and_schemas.md, Oct 18 2026).
+# Fields: id (unique, never rename once taught), title, facts, example, review.
+# "review" is the example used the second time a topic comes around.
+
+id: skills
+title: Finding and loading skills
+facts: skills_list lists every skill (name + description), optionally filtered by category. skill_view(name) loads a skill's full SKILL.md; add file_path to load a linked script or template from the skill's folder. Plugin skills use "plugin:skill".
+example: skills_list() then skill_view(name="workout")
+review: skills_list(category="email") then skill_view(name="inbox-triage", file_path="report.py")
+
+id: terminal
+title: Running shell commands with terminal
+facts: terminal(command) runs a shell command on the Hermes host (the Mac Mini). Options: workdir sets the directory, timeout defaults to 180 s (foreground max 600). Output comes back to the model as text.
+example: terminal(command="sw_vers && uptime && df -h /")
+review: terminal(command="ls -lt | head", workdir="/Users/hermes/.hermes/attachments")
+
+id: read_file
+title: Reading files with read_file
+facts: read_file(path) returns a text file with line numbers. offset (1-indexed) and limit (max 2000) page through big files. It also reads .docx, .xlsx, .pptx, PDF, EPUB, SQLite and notebooks.
+example: read_file(path="~/.hermes/skills/fitness/workout/SKILL.md", limit=40)
+review: read_file(path="~/Documents/statement.pdf", offset=1, limit=100)
+
+id: search_files
+title: Searching with search_files
+facts: search_files is ripgrep-backed. target="content" searches inside files with a regex; target="files" finds files by glob name. order="modified" lists newest first; output_mode can be content, files_only or count; context adds surrounding lines.
+example: search_files(pattern="MEDIA:", path="~/.hermes/skills", output_mode="files_only")
+review: search_files(pattern="*.csv", target="files", path="~/.hermes/attachments", order="modified", limit=5)
+
+id: write_file
+title: Creating files with write_file
+facts: write_file(path, content) creates or completely overwrites a file and auto-creates parent folders. It runs a syntax check on code files. Use patch instead when only part of a file changes.
+example: write_file(path="~/notes/hermes-ideas.md", content="# Ideas\n- weekly weight chart\n")
+review: write_file(path="~/scripts/hello.py", content="print('hello from Hermes')\n") then terminal(command="python3 ~/scripts/hello.py")
+
+id: patch
+title: Editing files with patch
+facts: patch(path, old_string, new_string) does a find-and-replace in one file. Matching is fuzzy, syntax is checked after the edit, and replace_all=true changes every occurrence. An empty new_string deletes the text.
+example: patch(path="~/notes/hermes-ideas.md", old_string="- weekly weight chart", new_string="- weekly weight chart (done)")
+review: patch(path="~/scripts/hello.py", old_string="hello", new_string="good morning", replace_all=true)
+
+id: web_search
+title: Searching the web with web_search
+facts: web_search(query) returns result titles and URLs. limit defaults to 5 (max 100). Operators like site:, filetype:, intitle: and "exact phrase" work.
+example: web_search(query="site:hermes-agent.nousresearch.com cron", limit=5)
+review: web_search(query="Qwen3 \"context length\" filetype:pdf", limit=3)
+
+id: web_extract
+title: Reading web pages with web_extract
+facts: web_extract(urls) returns clean markdown for up to 5 URLs per call, including PDF URLs. char_limit sets a per-page budget (default 15000). Pair it with web_search: search finds pages, extract reads them.
+example: web_extract(urls=["https://hermes-agent.nousresearch.com/docs/llms.txt"], char_limit=4000)
+review: web_extract(urls=["https://en.wikipedia.org/wiki/Cron"], char_limit=3000)
+
+id: vision_analyze
+title: Looking at images with vision_analyze
+facts: vision_analyze(image_url, question) loads an image (URL, local path, or data: URL) and answers a question about it. region=[x1,y1,x2,y2] crops to part of the image in original pixel coordinates. This is how the workout skill reads handwritten logs.
+example: vision_analyze(image_url="~/.hermes/attachments/photo.jpg", question="List every exercise written on this page.")
+review: vision_analyze(image_url="~/.hermes/attachments/photo.jpg", question="What weight is written on the top line?", region=[0,0,1200,300])
+
+id: memory
+title: Saving durable facts with memory
+facts: memory saves short facts that persist across sessions. action is add, replace or remove; replace and remove find the entry by an old_text substring. target="user" is for facts about you, target="memory" for environment and conventions. operations=[...] applies several changes at once.
+example: memory(action="add", target="user", content="Prefers lessons under 300 words, delivered by Telegram.")
+review: memory(action="replace", target="user", old_text="under 300 words", content="Prefers lessons under 250 words, delivered by Telegram.")
+
+id: clarify
+title: Asking questions with clarify
+facts: clarify asks you 1-5 questions in one call. Each question can offer up to 4 choices (recommended first), allow multi_select, or omit choices for a free-text answer. Good for decisions the agent shouldn't guess.
+example: clarify(questions=[{"question": "Which day should the lesson run?", "choices": ["Weekdays", "Every day", "Mondays only"]}])
+review: clarify(questions=[{"question": "Which topics should I skip?", "choices": ["Browser", "Desktop UI", "Fastmail"], "multi_select": true}])
+
+id: todo_list
+title: Tracking multi-step work with todo_list
+facts: todo_list(todos=[...]) writes a task list; each item needs id, content and status (pending, in_progress, completed, cancelled). parent nests items. merge=true updates existing items instead of replacing the whole list.
+example: todo_list(todos=[{"id": "1", "content": "Back up skills folder", "status": "pending"}, {"id": "2", "content": "Install new skill", "status": "pending"}])
+review: todo_list(todos=[{"id": "1", "content": "Back up skills folder", "status": "completed"}], merge=true)
+
+id: execute_code
+title: Scripting tool calls with execute_code
+facts: execute_code runs Python in a persistent kernel and can call Hermes tools via "from hermes_tools import ...". Only terminal, read_file, write_file, patch, search_files, web_search and web_extract are importable; MCP tools like Fastmail are not, and the kernel has no direct network. reset=true starts a fresh kernel.
+example: execute_code(code="from hermes_tools import search_files\nr = search_files(pattern='*.md', target='files', path='~/.hermes/skills')\nprint(r)")
+review: execute_code(code="from hermes_tools import terminal\nfor d in ['/', '/Users']:\n    print(terminal(command=f'du -sh {d} 2>/dev/null | tail -1'))")
+
+id: background
+title: Background jobs with terminal and process_manage
+facts: terminal(command, background=true) starts a long job and returns a session_id instead of waiting. The deferred process_manage tool then uses that id: poll, log, wait, kill, or write/submit stdin. notify=true tells the agent when the job exits.
+example: terminal(command="ping -c 30 1.1.1.1", background=true, notify=true) then process_manage(action="log", session_id="<id it returned>")
+review: process_manage(action="list") then process_manage(action="wait", session_id="<id>", timeout=60)
+
+id: cronjob
+title: Scheduling with cronjob_manage
+facts: cronjob_manage (deferred) creates and manages scheduled jobs: create, list, update, pause, resume, remove, run. schedule takes an interval, cron syntax or an ISO time. prompt must be self-contained; skills=[...] loads skills first; deliver picks where output goes. run fires a job now for testing.
+example: cronjob_manage(action="create", name="Morning lesson", schedule="0 8 * * 1-5", prompt="Run the daily-hermes-lesson skill.", skills=["daily-hermes-lesson"])
+review: cronjob_manage(action="list") then cronjob_manage(action="run", job_id="<id>")
+
+id: delegate_task
+title: Parallel subagents with delegate_task
+facts: delegate_task spawns subagents, each with its own conversation, terminal and tools, up to 10 in parallel. Each task needs a goal; context gives background; output_schema forces a JSON answer. action can also be list, steer (send a correction) or stop.
+example: delegate_task(tasks=[{"goal": "Summarize disk usage of ~/.hermes"}, {"goal": "List skills whose SKILL.md is over 100 lines"}])
+review: delegate_task(action="list") then delegate_task(action="steer", subagent_id="<id>", message="Only check the email category.")
+
+id: skill_manage
+title: Writing skills with skill_manage
+facts: skill_manage(operations=[...]) creates, patches or deletes skills. Each op needs name and action: create, patch, write_file, remove_file, delete. write_file adds a helper script next to SKILL.md via file_path and file_content; category puts the skill in a subfolder.
+example: skill_manage(operations=[{"name": "hello-skill", "action": "create", "category": "learning", "content": "---\nname: hello-skill\ndescription: Say hello\n---\nReply: hello."}])
+review: skill_manage(operations=[{"name": "hello-skill", "action": "delete"}])
+
+id: tool_search
+title: Deferred tools: tool_search, tool_describe, tool_call
+facts: 22 tools are always loaded; 31 more (Fastmail, cron, process_manage, computer_use, desktop UI and others) are deferred. The agent finds one with tool_search, reads its schema with tool_describe, then runs it with tool_call. Keeping them deferred keeps the prompt small for the local model.
+example: tool_search(query="fastmail email") then tool_describe(name="mcp__fastmail__search_email")
+review: tool_search(query="cron schedule") then tool_describe(name="cronjob_manage"), then tool_call it with action="list"
+
+id: session_search
+title: Recalling old chats with session_search
+facts: session_search (deferred) searches past Hermes sessions with full-text search. Filter with after/before, sort newest or oldest, and skip sessions already seen with exclude_session_ids. Passing session_id and around_message_id reads a window of messages from one session.
+example: session_search(query="restaurant-finder", sort="newest", limit=3)
+review: session_search(session_id="<id>", around_message_id=42, window=5)
+
+id: fastmail_email
+title: Reading email with Fastmail search_email
+facts: mcp__fastmail__search_email takes a Gmail-style query (from:, subject:, after:YYYY-MM-DD) and returns up to 50 results per page; follow nextCursor for more. read_email(id) gets the full message; read_thread(threadId) gets the whole conversation. Your config allows read tools plus drafts only, no sending.
+example: mcp__fastmail__search_email(query="from:jama after:2026-10-01", limit=10)
+review: mcp__fastmail__search_email(query="is:unread has:attachment", limit=5) then mcp__fastmail__read_thread(threadId="<id>")
+
+id: fastmail_calendar
+title: Calendar and notes with Fastmail
+facts: list_calendars shows your calendars. search_events lists events between after and before (ISO or relative; default 3 months back to 12 months ahead) with an optional text query. search_notes and read_note work the same way for Fastmail notes.
+example: mcp__fastmail__search_events(after="now", before="+7d", limit=20)
+review: mcp__fastmail__search_notes(query="Hermes", limit=5)
+
+id: fastmail_contacts
+title: Contacts with Fastmail
+facts: search_contacts searches your personal address book; search_org_contacts searches a shared company directory (read-only). list_identities shows the From addresses you can send as. Both searches page with cursor.
+example: mcp__fastmail__search_contacts(query="dentist", limit=5)
+review: mcp__fastmail__list_identities()
+
+id: media
+title: Sending files to Telegram with MEDIA: lines
+facts: Any line in the final reply of the form MEDIA:<absolute path> becomes a file attachment in Telegram. Your skills write files under /Users/hermes/.hermes/attachments with unique names and let a script print the MEDIA: line so the model copies it exactly.
+example: terminal(command="date > /Users/hermes/.hermes/attachments/test_now.txt && echo MEDIA:/Users/hermes/.hermes/attachments/test_now.txt")
+review: text_to_speech(text="Lesson complete.") returns a MEDIA: path you can put in the reply as a voice bubble.
+
+id: text_to_speech
+title: Voice replies with text_to_speech
+facts: text_to_speech(text) makes an audio file and returns a MEDIA: path; supported providers show it as a Telegram voice bubble. speed ranges 0.25-4.0; instructions guides tone; output_path overrides the default ~/.hermes/audio_cache location.
+example: text_to_speech(text="Good morning. Today's lesson is ready.", speed=1.1)
+review: text_to_speech(text="Three emails need replies today.", instructions="calm, brief newsreader tone")
+
+id: browser_exec
+title: Driving a browser with browser_exec
+facts: browser_exec(code) runs Python with browser helpers pre-imported: page_info() for page state, js() to run JavaScript, fill_input() for fields, cdp() for raw Chrome DevTools calls. The session persists between calls; session="name" gives an isolated one. Your tpaw-load skill is built on it.
+example: browser_exec(code="cdp('Page.navigate', url='https://example.com'); print(page_info())")
+review: browser_exec(code="print(js('document.title'))", session="scratch")
+
+id: browser_vault
+title: Logins without typing passwords: browser vault
+facts: browser_vault_list shows saved logins, cards and addresses as handles. browser_vault_fill(handle) fills the current page server-side, so values never appear in chat. browser_vault_unlock connects 1Password or Bitwarden; browser_vault_enter_code fills 2FA codes; browser_vault_save_login saves a new one.
+example: browser_vault_list() then browser_vault_fill(handle="vault_<id from the list>")
+review: browser_vault_unlock(backend="bitwarden") then browser_vault_list()
+
+id: computer_use
+title: Controlling desktop apps with computer_use
+facts: computer_use (deferred) drives the Mac desktop: capture takes a screenshot (mode som numbers clickable elements, vision is plain, ax is the accessibility tree), then click, type, key, scroll or drag by element number or coordinate. app limits capture to one app.
+example: computer_use(action="list_apps") then computer_use(action="capture", app="Finder")
+review: computer_use(action="capture", app="Notes") then computer_use(action="key", keys="cmd+n")
+
+id: catalog
+title: Finding plugins and skills with manage_catalog
+facts: manage_catalog (deferred) searches the Hermes catalog for plugins (kind="plugin") or hub skills (kind="skill") with action="search", then offers chosen items with action="install" and a one-line reason.
+example: manage_catalog(action="search", kind="skill", query="calendar")
+review: manage_catalog(action="search", kind="plugin", query="home assistant")
+
+id: desktop_preview
+title: The desktop preview pane
+facts: In the Hermes desktop app, desktop_preview opens, closes or reads a web page in a pane beside the chat. drive_preview clicks, types and scrolls on that page using element refs; annotate_preview highlights elements so you can see what the agent means.
+example: desktop_preview(action="open", url="https://hermes-agent.nousresearch.com/docs") then drive_preview(action="elements", max=20)
+review: drive_preview(action="scroll", to="bottom") then desktop_preview(action="read", count=2000)
+
+id: desktop_layout
+title: Desktop panes, layouts and projects
+facts: focus_pane shows chat, files, terminal, review or sessions. apply_layout switches presets (default, focus, terminal-deck, quad). desktop_project creates or switches named workspaces anchored to a folder. These only matter in the desktop app, not Telegram.
+example: desktop_project(action="list") then apply_layout(preset="quad")
+review: desktop_project(action="create", name="Skills", path="/Users/hermes/.hermes/skills") then focus_pane(pane="files")

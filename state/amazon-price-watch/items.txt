@@ -1,0 +1,23 @@
+# Amazon price watch list: one ASIN or ISBN per line. Text after # is a comment.
+# ISBN-13s are converted to ISBN-10 automatically. New items get today's price as their baseline.
+B0GBZ2MDDJ   # The AGI Chronicles (Kindle)
+B0GPYFP5QD   # The Last Best Place on the Internet (Kindle)
+B0GS8B4LYH   # The Complete High-Protein Cookbook (Kindle)
+B0F22SKW5Y   # The Scaling Era (Kindle)
+1788406893   # 1001 Albums You Must Hear Before You Die (Paperback)
+1517916402   # Exploring the St. Croix River Valley (Paperback)
+B077ZJ1ZKZ   # Innovo iP900BP-B Pulse Oximeter
+B015QIC1PW   # Midland ER310 Emergency Crank Radio
+B08N4P59FP   # This Is Your Mind on Plants (Kindle)
+0375758259   # When Genius Failed (Paperback)
+1421422670   # Emmy Noether's Wonderful Theorem (Paperback)
+B08KFT2XPQ   # The Shortest History of England (Kindle)
+B07P5GH8S4   # Out of Darkness, Shining Light (Kindle)
+0671646656   # Swallowing Clouds (Hardcover)
+9781565233690 # Illustrated Cabinetmaking (Paperback)
+B006QV7ZMS   # Reasons and Persons (Kindle)
+B00ARGXJM8   # A New History of Western Philosophy (Kindle)
+B00EBRTZYK   # My Life in Middlemarch (Kindle)
+B003SNJL42   # The Top Ten: Writers Pick Their Favorite Books (Kindle)
+B00B4V6IZK   # Quantum Computing since Democritus (Kindle)
+B00UCIEYI4   # Leonhard Euler: Mathematical Genius in the Enlightenment (eTextbook)

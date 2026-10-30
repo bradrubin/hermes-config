@@ -1,0 +1,363 @@
+{
+  "jobs": [
+    {
+      "id": "d99f9920d015",
+      "name": "JAMA Monthly Scan",
+      "prompt": "Scan JAMA emails for the previous month. Create or update the monthly index file at ~/Documents/JAMA/JAMA_<MonthYear>.md. Follow the jama-email-scan skill for the procedure. Use these topics: hormone-sensitive breast cancer, prostate cancer screening, family medicine overviews, calcium score. Always check ~/Documents/JAMA/ for existing files first. Output files should have no Source email IDs, be sorted by topic, and include a summary header. If a match is found that is tangential (touches a topic secondarily), put it in a \"Related but Not Core Matches\" section.",
+      "skills": [
+        "jama-email-scan"
+      ],
+      "skill": "jama-email-scan",
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 0 1 * *",
+        "display": "0 0 1 * *"
+      },
+      "schedule_display": "0 0 1 * *",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-10-06T17:24:29.805025-05:00",
+      "next_run_at": "2026-11-01T00:00:00-05:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "last_delivery_unverified": null,
+      "last_failure": null,
+      "failure_streak": 0,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "1a9df06b87e9",
+      "name": "Daily Hermes Lesson",
+      "prompt": "You have loaded the `daily-hermes-lesson` skill. Deliver exactly one practical lesson about Hermes to the user. Cover ONE concept — a single tool, skill, setting, or workflow. Follow the lesson structure from the skill: concept name, why it matters, a runnable example, what they just did, and a \"try it yourself\" prompt. Do not repeat lessons you've already covered. Keep it under 300 words.",
+      "skills": [
+        "daily-hermes-lesson"
+      ],
+      "skill": "daily-hermes-lesson",
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": [
+        "self"
+      ],
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 5 * * *",
+        "display": "every day at 5am"
+      },
+      "schedule_display": "every day at 5am",
+      "repeat": {
+        "times": null,
+        "completed": 9
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-10-23T21:14:11.634594-05:00",
+      "next_run_at": "2026-10-31T05:00:00-05:00",
+      "last_run_at": "2026-10-30T05:00:20.531428-05:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "last_delivery_unverified": null,
+      "last_failure": null,
+      "failure_streak": 0,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null,
+      "attach_to_session": true,
+      "fire_claim": null,
+      "canonical_completions": [
+        "9cb2f507432d4d56938470eec394c39a"
+      ],
+      "last_dispatch": {
+        "scheduled_at": "2026-10-30T05:00:00-05:00",
+        "dispatched_at": "2026-10-30T05:00:09.357856-05:00",
+        "lateness_seconds": 9.4,
+        "kind": "on_time"
+      }
+    },
+    {
+      "id": "104b30198efb",
+      "name": "Spam Bypass Daily",
+      "prompt": "Run the spam-bypass skill: search Fastmail inboxes for bsrubin@stthomas.edu and bradrubin@bradrubin.com for emails from today and yesterday. Filter to Inbox only (discard Trash/Spam/Archive). For each spam candidate found, create a verbose, circular, ambiguous reply as a Draft in Fastmail using mcp__fastmail__draft_email. NEVER send the drafts.",
+      "skills": [
+        "spam-bypass"
+      ],
+      "skill": "spam-bypass",
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 5 * * *",
+        "display": "every day at 5:30am"
+      },
+      "schedule_display": "every day at 5:30am",
+      "repeat": {
+        "times": null,
+        "completed": 6
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-10-24T08:34:26.007688-05:00",
+      "next_run_at": "2026-10-31T05:30:00-05:00",
+      "last_run_at": "2026-10-30T05:31:18.691092-05:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "last_delivery_unverified": null,
+      "last_failure": null,
+      "failure_streak": 0,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null,
+      "last_dispatch": {
+        "scheduled_at": "2026-10-30T05:30:00-05:00",
+        "dispatched_at": "2026-10-30T05:30:09.453048-05:00",
+        "lateness_seconds": 9.5,
+        "kind": "on_time"
+      },
+      "fire_claim": null,
+      "canonical_completions": [
+        "d2f7564c158d40069cb5034ac3fafcb3"
+      ]
+    },
+    {
+      "id": "19cfd6249997",
+      "name": "TPAW load - Monday 3 AM",
+      "prompt": "Run skill tpaw-load with no arguments.",
+      "skills": [
+        "tpaw-load"
+      ],
+      "skill": "tpaw-load",
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * 1",
+        "display": "0 3 * * 1"
+      },
+      "schedule_display": "0 3 * * 1",
+      "repeat": {
+        "times": null,
+        "completed": 6
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-10-25T08:13:58.159485-05:00",
+      "next_run_at": "2026-11-02T03:00:00-05:00",
+      "last_run_at": "2026-10-30T12:47:46.064223-05:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "last_delivery_unverified": null,
+      "last_failure": null,
+      "failure_streak": 0,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null,
+      "last_dispatch": {
+        "scheduled_at": "2026-10-26T03:00:00-05:00",
+        "dispatched_at": "2026-10-26T03:00:07.804990-05:00",
+        "lateness_seconds": 7.8,
+        "kind": "on_time"
+      },
+      "fire_claim": null,
+      "canonical_completions": [
+        "5427571eeebd489fa53ca37b05328c61"
+      ]
+    },
+    {
+      "id": "9816bae39755",
+      "name": "TPAW load - 1st of month 3 AM",
+      "prompt": "Run skill tpaw-load with no arguments.",
+      "skills": [
+        "tpaw-load"
+      ],
+      "skill": "tpaw-load",
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 1 * *",
+        "display": "0 3 1 * *"
+      },
+      "schedule_display": "0 3 1 * *",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-10-25T08:13:58.168780-05:00",
+      "next_run_at": "2026-11-01T03:00:00-05:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "last_delivery_unverified": null,
+      "last_failure": null,
+      "failure_streak": 0,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "f1b2b1ee8db4",
+      "name": "tbill-roll",
+      "prompt": "Run the tbill-roll skill: execute `python3 /Users/hermes/.hermes/skills/finance/tbill-roll/roll.py` and report the output exactly as-is.",
+      "skills": [
+        "tbill-roll"
+      ],
+      "skill": "tbill-roll",
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 4 * * *",
+        "display": "every day at 4am"
+      },
+      "schedule_display": "every day at 4am",
+      "repeat": {
+        "times": null,
+        "completed": 1
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-10-29T12:43:54.140971-05:00",
+      "next_run_at": "2026-10-31T04:00:00-05:00",
+      "last_run_at": "2026-10-30T04:00:40.730028-05:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "last_delivery_unverified": null,
+      "last_failure": null,
+      "failure_streak": 0,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null,
+      "last_dispatch": {
+        "scheduled_at": "2026-10-30T04:00:00-05:00",
+        "dispatched_at": "2026-10-30T04:00:09.344672-05:00",
+        "lateness_seconds": 9.3,
+        "kind": "on_time"
+      },
+      "fire_claim": null,
+      "canonical_completions": [
+        "749bdf8db8e4461fad68c9fee1b951df"
+      ]
+    },
+    {
+      "id": "919603312d38",
+      "name": "Amazon price watch",
+      "prompt": "Run the amazon-price-watch skill for the daily cron run.",
+      "skills": [
+        "amazon-price-watch"
+      ],
+      "skill": "amazon-price-watch",
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 4 * * *",
+        "display": "30 4 * * *"
+      },
+      "schedule_display": "30 4 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-10-30T12:41:26.526914-05:00",
+      "next_run_at": "2026-10-31T04:30:00-05:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "last_delivery_unverified": null,
+      "last_failure": null,
+      "failure_streak": 0,
+      "deliver": "telegram",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null
+    }
+  ],
+  "updated_at": "2026-10-30T12:47:46.065484-05:00"
+}

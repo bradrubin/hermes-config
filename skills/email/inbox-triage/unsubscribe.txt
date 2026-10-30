@@ -1,0 +1,3 @@
+# One sender email (or part of one) per line. Matching senders go to Unsubscribe.
+info@mortiseandtenonmag.com
+no-reply@substack.com

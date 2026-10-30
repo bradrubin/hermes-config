@@ -1,0 +1,9 @@
+# Where to read the portfolio balance when the skill is run with no amount.
+# Read with the Hermes Google Workspace skill:  google_api.py sheets get <sheet_id> "<sheet>!<cell>"
+sheet_id = 1Eoaa9-Z-zbBLAhz6LF9cN_aw4iW1b769Mz_5PxQZcJE
+sheet = AA
+cell = D20
+# Optional. If blank, the script searches ~/.hermes/skills/ for google_api.py.
+google_api =
+# Python that has the Google skill's libraries (the one you use to run google_api.py).
+python = python3

@@ -1,0 +1,5 @@
+# Optional: text that must appear on the page after the plan loads, one per line.
+# Exact, case-sensitive match against the page's visible text. Leave empty to skip.
+# Examples (uncomment and adjust to values from your plan):
+# $1,250,000
+# Age 67

@@ -1,0 +1,35 @@
+# ~/.hermes/.gitignore  (installed by the hermes dev kit)
+# Whitelist: ignore everything at the top level, then allow only what's safe and worth keeping.
+# Secrets (.env, auth.json, config.yaml), Chrome's profile, logs, sessions and Hermes's own code stay out.
+/*
+!/.gitignore
+!/CLAUDE.md
+!/.claude/
+!/ops/
+!/skills/
+!/scripts/
+!/state/
+!/memories/
+!/cron/
+!/SOUL.md
+!/config.redacted.yaml
+!/env.keys
+
+# Inside allowed folders
+/.claude/*
+!/.claude/settings.json
+/cron/*
+!/cron/jobs.json
+**/work/
+**/cache/
+**/__pycache__/
+**/timing.log
+**/timing.log.last
+**/*.bak-*
+**/.DS_Store
+**/.env
+**/*.pem
+**/*.key
+/skills/.hub/index-cache/
+**/node_modules/
+**/.venv/
