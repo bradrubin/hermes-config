@@ -6,14 +6,14 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-10-30T17:37:52.004215+00:00",
-    "last_viewed_at": "2026-10-30T17:37:52.003714+00:00",
+    "last_used_at": "2026-10-30T19:12:58.623110+00:00",
+    "last_viewed_at": "2026-10-30T19:12:58.620712+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 3,
-    "view_count": 3
+    "use_count": 4,
+    "view_count": 4
   },
   "arxiv": {
     "archived_at": null,
@@ -127,6 +127,22 @@
     "use_count": 1,
     "view_count": 1
   },
+  "duluth-price-watch": {
+    "archived_at": null,
+    "created_at": "2026-10-30T19:07:06.411726+00:00",
+    "created_by": null,
+    "first_seen_at": null,
+    "last_patched_at": null,
+    "last_reused_patch_generation": 0,
+    "last_used_at": "2026-10-30T19:09:57.241048+00:00",
+    "last_viewed_at": "2026-10-30T19:09:57.238749+00:00",
+    "patch_count": 0,
+    "patch_generation": 0,
+    "pinned": false,
+    "state": "active",
+    "use_count": 10,
+    "view_count": 10
+  },
   "email-inbox-triage": {
     "archived_at": null,
     "created_at": "2026-10-06T20:24:24.370511+00:00",
@@ -214,14 +230,14 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-10-30T16:00:04.855099+00:00",
-    "last_viewed_at": "2026-10-30T16:00:04.854601+00:00",
+    "last_used_at": "2026-10-30T19:37:53.493765+00:00",
+    "last_viewed_at": "2026-10-30T19:37:53.493292+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 34,
-    "view_count": 34
+    "use_count": 37,
+    "view_count": 37
   },
   "hermes-agent-skill-authoring": {
     "archived_at": null,
@@ -374,14 +390,14 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-10-30T15:57:31.905264+00:00",
-    "last_viewed_at": "2026-10-30T15:57:31.904730+00:00",
+    "last_used_at": "2026-10-30T19:09:33.525679+00:00",
+    "last_viewed_at": "2026-10-30T19:09:33.522876+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 4,
-    "view_count": 4
+    "use_count": 5,
+    "view_count": 5
   },
   "restaurant-finder": {
     "archived_at": null,
@@ -406,14 +422,14 @@
     "first_seen_at": null,
     "last_patched_at": "2026-10-21T15:19:33.757719+00:00",
     "last_reused_patch_generation": 3,
-    "last_used_at": "2026-10-30T10:30:09.532141+00:00",
-    "last_viewed_at": "2026-10-28T13:08:09.415142+00:00",
+    "last_used_at": "2026-10-30T19:45:10.308542+00:00",
+    "last_viewed_at": "2026-10-30T19:45:10.305774+00:00",
     "patch_count": 3,
     "patch_generation": 3,
     "pinned": false,
     "state": "active",
-    "use_count": 9,
-    "view_count": 3
+    "use_count": 10,
+    "view_count": 4
   },
   "spike": {
     "archived_at": null,
@@ -438,14 +454,14 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-10-30T09:00:09.444254+00:00",
-    "last_viewed_at": "2026-10-29T17:30:55.811009+00:00",
+    "last_used_at": "2026-10-30T19:31:16.346639+00:00",
+    "last_viewed_at": "2026-10-30T19:31:16.344137+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 2,
-    "view_count": 1
+    "use_count": 13,
+    "view_count": 12
   },
   "tpaw-load": {
     "archived_at": null,
@@ -454,14 +470,14 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-10-30T17:47:02.982622+00:00",
-    "last_viewed_at": "2026-10-19T01:31:23.050279+00:00",
+    "last_used_at": "2026-10-30T19:17:39.973846+00:00",
+    "last_viewed_at": "2026-10-30T19:17:39.971396+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 16,
-    "view_count": 10
+    "use_count": 22,
+    "view_count": 16
   },
   "workout-log-ocr": {
     "archived_at": null,
