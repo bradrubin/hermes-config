@@ -90,4 +90,5 @@ When one step failed, Qwen read the scripts, hand-wrote JSON, clicked around the
 - Variants that are not `orderable` (sold out) keep clearance prices (a $9.79 that cannot be bought). Always require `orderable`.
 - The API has no solid/pattern flag. Judge colors from swatch images (`imageGroups` with `viewType: "swatch"`): fetch them in-page as data URLs, build a contact sheet with PIL, and look at it. Keep the verdicts in a state file the script reads; unlisted colors are reported as "not sure" instead of guessed.
 - A dev harness for driving a tab of the Mini's Chrome from the terminal needs `websockets`: use the venv under `~/.hermes/installs/*/environments/*/venv/bin/python3`. Open your own tab with `PUT /json/new`, close it after.
-- See duluth-price-watch v1.0.0 (`duluth.py`) for the reference implementation.
+- The guest token in `localStorage.authToken` persists in Chrome between runs and expires in ~30 min. An expired one makes the API return HTTP 200 with an "Unauthorized" JSON body (no `data`), not a 401. Check the JWT `exp`; if expired, `removeItem('authToken')` and `Page.navigate` to the product page (in Hermes's tab `Page.reload` did not mint a new token, navigate did).
+- See duluth-price-watch v1.0.1 (`duluth.py`) for the reference implementation.

@@ -146,27 +146,41 @@ pattern|WD-40
     except Exception as e:
         return fail(f"could not open duluthtrading.com ({e})")
     ready = False
+    reloaded = False
+    # Chrome keeps the guest token in localStorage between runs; an expired one makes the API answer
+    # "Unauthorized" with HTTP 200. Treat only an unexpired token as ready, else drop it and reload once.
+    tok_left = ("(()=>{try{const t=localStorage.getItem('authToken').replace('Bearer ','');"
+                "return JSON.parse(atob(t.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).exp"
+                "-Math.floor(Date.now()/1000)}catch(e){return null}})()")
     for _ in range(80):
         time.sleep(0.5)
         try:
-            if _eval("location.host.endsWith('duluthtrading.com') && document.readyState === 'complete'"
-                     " && !!localStorage.getItem('authToken')"):
+            if not _eval("location.host.endsWith('duluthtrading.com') && document.readyState === 'complete'"):
+                continue
+            left = _eval(tok_left)
+            if isinstance(left, (int, float)) and left > 120:
                 ready = True
                 break
+            if not reloaded and (left is not None or _eval("!localStorage.getItem('authToken')") is False):
+                reloaded = True
+                _eval("localStorage.removeItem('authToken')")
+                _cdp("Page.navigate", url=START_URL)
+                time.sleep(1)
         except Exception:
             pass
     if not ready:
         try:
             title = _eval("document.title")
             where = _eval("location.href")
+            left = _eval(tok_left)
         except Exception:
-            title, where = "?", "?"
+            title, where, left = "?", "?", "?"
         why = "the site blocked the page (Access Denied)" if "denied" in str(title).lower() else \
             f"the page did not finish loading within 40s (title: {str(title)[:60]})"
         try:
             with open(DEBUG, "w") as f:
                 json.dump({"run_at": datetime.datetime.now().isoformat(timespec="seconds"), "load_failed": True,
-                           "url": where, "title": title}, f, indent=1)
+                           "url": where, "title": title, "token_left": left, "reloaded": reloaded}, f, indent=1)
         except Exception:
             pass
         return fail(why)
@@ -209,6 +223,12 @@ true
             return fail(f"the price call returned HTTP {r.get('status')} ({str(r.get('body'))[:80]})")
         data = json.loads(r["body"])["data"]
     except Exception:
+        try:
+            with open(DEBUG, "w") as f:
+                json.dump({"run_at": datetime.datetime.now().isoformat(timespec="seconds"),
+                           "unreadable": str(res)[:500]}, f, indent=1)
+        except Exception:
+            pass
         return fail("the price call returned data that could not be read")
     mark("fetch")
 

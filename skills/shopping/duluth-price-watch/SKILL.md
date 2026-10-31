@@ -1,7 +1,7 @@
 ---
 name: duluth-price-watch
 description: Nightly Duluth Buck Naked boxer price check
-version: 1.0.0
+version: 1.0.1
 author: Hermes Agent
 ---
 
