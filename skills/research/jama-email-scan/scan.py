@@ -45,17 +45,17 @@ HEADERS = {"original investigation", "research letter", "viewpoint", "special co
            "comment & response", "brief report", "clinical review", "jama insights", "online first", "new issue"}
 
 
-def load_token():
-    t = os.environ.get("FASTMAIL_JMAP_TOKEN")
+def load_token(name="FASTMAIL_API_TOKEN", required=True):
+    t = os.environ.get(name)
     if not t:
         try:
             for ln in open(f"{HOME}/.env"):
-                if ln.startswith("FASTMAIL_JMAP_TOKEN="):
+                if ln.startswith(name + "="):
                     t = ln.split("=", 1)[1].strip().strip("\"'")
         except OSError:
             pass
-    if not t:
-        raise RuntimeError("FASTMAIL_JMAP_TOKEN not found in the environment or .env")
+    if not t and required:
+        raise RuntimeError(f"{name} not found in the environment or .env")
     return t
 
 
@@ -82,11 +82,7 @@ class JMAP:
         return res
 
 
-def fetch_month(get_jmap, y, m):
-    cache = f"{WORK}/cache/{y}-{m:02d}.json"
-    if os.path.exists(cache) and time.time() - os.path.getmtime(cache) < 86400:
-        return json.load(open(cache))
-    j = get_jmap()
+def jmap_fetch(j, y, m):
     boxes = j.call("Mailbox/get", {"properties": ["name"]})["list"]
     ids = [b["id"] for b in boxes if b["name"].strip().lower() == "jama"]
     if not ids:
@@ -117,6 +113,106 @@ def fetch_month(get_jmap, y, m):
                 txt = html.unescape(re.sub(r"<[^>]+>", " ", h))
             emails.append({"subject": e.get("subject", ""), "date": e["receivedAt"],
                            "from": (e.get("from") or [{}])[0].get("name") or "", "text": txt})
+    return emails
+
+
+class MCP:
+    """Fastmail's MCP endpoint over plain HTTP JSON-RPC, with the same token Hermes uses."""
+    URL = "https://api.fastmail.com/mcp"
+
+    def __init__(self, tok):
+        self.h = {"Authorization": "Bearer " + tok, "Content-Type": "application/json",
+                  "Accept": "application/json, text/event-stream"}
+        self.n = 0
+        r = self.rpc("initialize", {"protocolVersion": "2025-03-26", "capabilities": {},
+                                    "clientInfo": {"name": "hermes-jama-scan", "version": "1"}})
+        self.server = (r.get("serverInfo") or {}).get("name", "?")
+        self.rpc("notifications/initialized", {}, notify=True)
+        self.tools = {t["name"]: t for t in self.rpc("tools/list", {}).get("tools", [])}
+
+    def rpc(self, method, params, notify=False):
+        body = {"jsonrpc": "2.0", "method": method, "params": params}
+        if not notify:
+            self.n += 1
+            body["id"] = self.n
+        req = urllib.request.Request(self.URL, json.dumps(body).encode(), self.h)
+        try:
+            resp = urllib.request.urlopen(req, timeout=120)
+        except urllib.error.HTTPError as e:
+            raise RuntimeError(f"Fastmail MCP HTTP {e.code} on {method}")
+        sid = resp.headers.get("Mcp-Session-Id")
+        if sid:
+            self.h["Mcp-Session-Id"] = sid
+        raw = resp.read().decode()
+        if notify or not raw.strip():
+            return {}
+        if "text/event-stream" in resp.headers.get("content-type", ""):
+            msgs = [json.loads(l[5:]) for l in raw.splitlines() if l.startswith("data:") and l[5:].strip()]
+            msg = next((x for x in msgs if x.get("id") == self.n), None) or {}
+        else:
+            msg = json.loads(raw)
+        if "error" in msg:
+            raise RuntimeError(f"Fastmail MCP {method} error: {str(msg['error'])[:150]}")
+        return msg.get("result", {})
+
+    def tool(self, name, args):
+        r = self.rpc("tools/call", {"name": name, "arguments": args})
+        if r.get("isError"):
+            raise RuntimeError(f"Fastmail MCP {name} failed: {str(r.get('content'))[:150]}")
+        v = r.get("structuredContent")
+        if v is None:
+            v = "".join(c.get("text", "") for c in r.get("content", []) if c.get("type") == "text")
+        for _ in range(3):
+            if isinstance(v, str):
+                try:
+                    v = json.loads(v)
+                except ValueError:
+                    break
+            if isinstance(v, dict) and isinstance(v.get("result"), (str, dict)):
+                v = v["result"]
+        return v
+
+
+def mcp_fetch(c, y, m):
+    q = f"in:JAMA after:{y}-{m:02d}-01 before:{y + (m == 12)}-{m % 12 + 1:02d}-01"
+    props = (c.tools.get("search_email", {}).get("inputSchema") or {}).get("properties", {})
+    cur_key = next((k for k in ("cursor", "nextCursor", "pageToken") if k in props), "cursor")
+    rows, cursor = [], None
+    while True:
+        a = {"query": q, "limit": 50}
+        if cursor:
+            a[cur_key] = cursor
+        r = c.tool("search_email", a)
+        if not isinstance(r, dict) or "results" not in r:
+            raise RuntimeError("unexpected search_email reply")
+        rows += r["results"]
+        cursor = r.get("nextCursor")
+        if not (r.get("hasMore") and cursor) or len(rows) > 1000:
+            break
+    emails = []
+    for row in rows:
+        d = c.tool("read_email", {"id": row["id"]})
+        if not isinstance(d, dict):
+            raise RuntimeError("unexpected read_email reply")
+        txt = d.get("bodyText") or d.get("body") or d.get("preview") or ""
+        emails.append({"subject": row.get("subject", ""), "date": row["receivedAt"],
+                       "from": (row.get("from") or [{}])[0].get("name") or "", "text": txt})
+    return emails
+
+
+def fetch_month(sources, y, m):
+    cache = f"{WORK}/cache/{y}-{m:02d}.json"
+    if os.path.exists(cache) and time.time() - os.path.getmtime(cache) < 86400:
+        return json.load(open(cache))
+    errs = []
+    for fn, build in sources:
+        try:
+            emails = fn(build(), y, m)
+            break
+        except Exception as e:
+            errs.append(str(e))
+    else:
+        raise RuntimeError("; ".join(errs) or "no Fastmail token available")
     os.makedirs(os.path.dirname(cache), exist_ok=True)
     json.dump(emails, open(cache, "w"))
     return emails
@@ -220,9 +316,20 @@ def pick_month(arg):
     return None
 
 
-def run(args, get_jmap=lambda: JMAP(load_token())):
+def default_sources():
+    src = [(mcp_fetch, lambda: MCP(load_token()))]
+    if load_token("FASTMAIL_JMAP_TOKEN", False):
+        src.append((jmap_fetch, lambda: JMAP(load_token("FASTMAIL_JMAP_TOKEN"))))
+    return src
+
+
+def run(args, sources=None):
+    sources = sources or default_sources()
     kv = dict(p.split("=", 1) for p in re.split(r"\s*;\s*", args.strip()) if "=" in p)
     cron = kv.get("cron") == "1"
+    if kv.get("check") == "1":
+        c = MCP(load_token())
+        return f"Fastmail MCP connection OK: server {c.server}, tools: {', '.join(sorted(c.tools))}"
     ym = pick_month(kv.get("month", "auto"))
     if ym is None:
         return ("[SILENT] JAMA scan: last 12 months already indexed." if cron
@@ -237,7 +344,7 @@ def run(args, get_jmap=lambda: JMAP(load_token())):
     topics = json.load(open(tf))
     if os.path.exists(path) and kv.get("force") != "1":
         return f"The {datetime.date(y, m, 1):%B %Y} index already exists at {path}. Re-run with force=1 to rebuild it (the old file is backed up first)."
-    emails = fetch_month(get_jmap, y, m)
+    emails = fetch_month(sources, y, m)
     mark("fetch")
     if not emails:
         raise RuntimeError(f"the JAMA folder has no emails for {datetime.date(y, m, 1):%B %Y}")
