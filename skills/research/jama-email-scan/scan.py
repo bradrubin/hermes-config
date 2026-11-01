@@ -27,13 +27,11 @@ def fmt(s):
 
 DEFAULT_TOPICS = {
     "Hormone-Sensitive Breast Cancer": {
-        "core": [r"breast.*(hormone|estrogen|endocrine|tamoxifen|aromatase|letrozole|anastrozole|fulvestrant|CDK4|luminal|ER-positive|HR\+|HR-positive)",
-                 r"(hormone|estrogen|endocrine|tamoxifen|aromatase|letrozole|anastrozole|fulvestrant|CDK4|luminal|ER-positive|HR\+|HR-positive).*breast"],
-        "related": [r"breast (cancer|carcinoma|neoplasm)"]},
+        "core": [r"breast (cancer|carcinoma|neoplasm)", r"(hormone|estrogen|endocrine|tamoxifen|aromatase|letrozole|anastrozole|fulvestrant|CDK4|luminal|HR\+|HR-positive).*breast"],
+        "related": [r"\bbreast\b", r"mammograph"]},
     "Prostate Cancer Screening": {
-        "core": [r"prostate.*(screen|PSA|prostate-specific antigen|early detection|MRI|biops)",
-                 r"(screen|PSA|prostate-specific antigen|early detection).*prostate"],
-        "related": [r"prostate"]},
+        "core": [r"prostate"],
+        "related": [r"androgen|testosterone|\bPSA\b"]},
     "General Medical Overviews for Family Medicine": {
         "core": [r"primary care", r"family (medicine|physician)", r"clinical review", r"\boverview\b", r"JAMA Insights"],
         "related": []},
@@ -219,9 +217,9 @@ def fetch_month(sources, y, m):
 
 
 LINK = re.compile(r"<(https?://[^>\s]*/t\.do\?id=[^>\s]*)>")
-JUNK = re.compile(r"volume \d+|facebook|twitter|linked ?in|pinterest|youtube|instagram|alt content|advertisement|trouble viewing|"
+JUNK = re.compile(r", and more$|dr habil|dr rer|dr med|volume \d+|facebook|twitter|linked ?in|pinterest|youtube|instagram|alt content|advertisement|trouble viewing|"
                   r"ideal for sharing|visual abstract|subscribe|podcast|masthead|unsubscribe|thank you for|read it online|sign up|view in browser|released online first", re.I)
-PREFIX = re.compile(r"^((original investigation|research letter|brief report|special communication|editorial|comment & response|invited commentary|"
+PREFIX = re.compile(r"^((review(?= women.s health)|research summary|audio|less is more|mpp editorial|ma medical news|medical news|original investigation|research letter|brief report|special communication|editorial|comment & response|invited commentary|"
                     r"viewpoint|clinical review|women.s health|jama (internal medicine|oncology|cardiology|network open|insights|pediatrics|psychiatry|surgery|neurology)|"
                     r"online first|new issue)\b[:\s]*)+", re.I)
 LABEL = re.compile(r"\*[A-Z][A-Za-z&,' -]{3,40}\*\s*")
@@ -240,12 +238,17 @@ def articles(text):
         chunk = re.split(r"\n\s*\n", seg)[-1]
         parts = LABEL.split(chunk)
         chunk = parts[-1] if parts else chunk
-        lines = [re.sub(r"\s+", " ", l).strip(" *_#>") for l in chunk.splitlines()]
-        lines = [l for l in lines if l]
-        while lines and AUTHORS.search(lines[0]):
-            lines.pop(0)
-        title = " ".join(lines).strip()
-        m = list(re.finditer(r"\b(MD|PhD|MS|MPH|DO|MSc|ScD)\b\*?[,;]?\s+", title))
+        title = re.sub(r"\s+", " ", chunk).strip(" *_#>")
+        if re.search(r"\bet al\.?\*?\s*\S{3}", title):
+            title = re.sub(r"^.*\bet al\.?\*?\s*", "", title)
+        else:
+            lines = [re.sub(r"\s+", " ", l).strip(" *_#>") for l in chunk.splitlines()]
+            lines = [l for l in lines if l]
+            while lines and AUTHORS.search(lines[0]):
+                lines.pop(0)
+            title = " ".join(lines).strip()
+        title = re.sub(r"^.*\bCollaborators\s+", "", title)
+        m = list(re.finditer(r"\b(MD|PhD|MS|MA|MAS|MPH|DO|MSc|ScD|PharmD)\b\*?[,;]?\s+", title))
         if m and len(title) - m[-1].end() >= 15:
             title = title[m[-1].end():]
         title = PREFIX.sub("", title).strip(" ;*")

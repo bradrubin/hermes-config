@@ -1,7 +1,7 @@
 ---
 name: jama-email-scan
 description: Scan JAMA emails for topic matches and build a monthly index.
-version: 1.1.1
+version: 1.1.2
 author: Brad Rubin, Hermes Agent
 license: MIT
 platforms: [macos]
