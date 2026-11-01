@@ -46,16 +46,16 @@ HEADERS = {"original investigation", "research letter", "viewpoint", "special co
 
 
 def load_token():
-    t = os.environ.get("FASTMAIL_API_TOKEN")
+    t = os.environ.get("FASTMAIL_JMAP_TOKEN")
     if not t:
         try:
             for ln in open(f"{HOME}/.env"):
-                if ln.startswith("FASTMAIL_API_TOKEN="):
+                if ln.startswith("FASTMAIL_JMAP_TOKEN="):
                     t = ln.split("=", 1)[1].strip().strip("\"'")
         except OSError:
             pass
     if not t:
-        raise RuntimeError("FASTMAIL_API_TOKEN not found in the environment or .env")
+        raise RuntimeError("FASTMAIL_JMAP_TOKEN not found in the environment or .env")
     return t
 
 
