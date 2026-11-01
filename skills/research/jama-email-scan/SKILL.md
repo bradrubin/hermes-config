@@ -1,7 +1,7 @@
 ---
 name: jama-email-scan
 description: Scan JAMA emails for topic matches and build a monthly index.
-version: 1.1.2
+version: 1.2.0
 author: Brad Rubin, Hermes Agent
 license: MIT
 platforms: [macos]
@@ -37,4 +37,4 @@ ARGS
 - If the script prints a failure, send it as-is. Do not investigate, retry, or read or edit skill files.
 - Do not summarize, reformat or add comments about the articles.
 
-Topics (editable by Brad): `/Users/hermes/.hermes/state/jama-email-scan/topics.json`.
+Topics (editable by Brad): `/Users/hermes/.hermes/state/jama-email-scan/topics.txt` (plain text, one regex per line; the script reports bad lines).

@@ -4,7 +4,7 @@ Usage: scan.py <<'ARGS'
 month=2026-10; force=1; cron=1
 ARGS
 month omitted or 'auto': most recent month (up to 12 back) with no index file."""
-import os, re, sys, json, time, html, datetime, urllib.request, urllib.error
+import os, re, sys, json, time, html, shutil, datetime, urllib.request, urllib.error
 
 T0 = time.time()
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -23,24 +23,6 @@ def mark(n):
 def fmt(s):
     s = int(round(s))
     return f"{s}s" if s < 60 else f"{s // 60}m{s % 60:02d}s"
-
-
-DEFAULT_TOPICS = {
-    "Hormone-Sensitive Breast Cancer": {
-        "core": [r"breast (cancer|carcinoma|neoplasm)", r"(hormone|estrogen|endocrine|tamoxifen|aromatase|letrozole|anastrozole|fulvestrant|CDK4|luminal|HR\+|HR-positive).*breast"],
-        "related": [r"\bbreast\b", r"mammograph"]},
-    "Prostate Cancer Screening": {
-        "core": [r"prostate"],
-        "related": [r"androgen|testosterone|\bPSA\b"]},
-    "General Medical Overviews for Family Medicine": {
-        "core": [r"primary care", r"family (medicine|physician)", r"clinical review", r"\boverview\b", r"JAMA Insights"],
-        "related": []},
-    "Calcium Score and Cardiovascular Risk Assessment": {
-        "core": [r"coronary artery calcium", r"calcium score", r"\bCAC\b"],
-        "related": [r"coronary calcif"]},
-}
-_UNUSED = {"original investigation", "research letter", "viewpoint", "special communication", "review", "editorial",
-           "comment & response", "brief report", "clinical review", "jama insights", "online first", "new issue"}
 
 
 def load_token(name="FASTMAIL_API_TOKEN", required=True):
@@ -333,6 +315,33 @@ def pick_month(arg):
     return None
 
 
+def load_topics():
+    """Read state/jama-email-scan/topics.txt (seeded from topics.default.txt if missing)."""
+    tf = f"{STATE}/topics.txt"
+    if not os.path.exists(tf):
+        shutil.copyfile(f"{HERE}/topics.default.txt", tf)
+    topics, cur = {}, None
+    for n, ln in enumerate(open(tf), 1):
+        ln = ln.strip()
+        if not ln or ln.startswith("#"):
+            continue
+        if ln.startswith("[") and ln.endswith("]"):
+            cur = topics.setdefault(ln[1:-1].strip(), {"core": [], "related": []})
+            continue
+        kind, _, pat = ln.partition(":")
+        kind, pat = kind.strip().lower(), pat.strip()
+        if cur is None or kind not in ("core", "related") or not pat:
+            raise RuntimeError(f"topics.txt line {n} not understood: {ln[:60]}")
+        try:
+            re.compile(pat)
+        except re.error as e:
+            raise RuntimeError(f"topics.txt line {n} has a bad pattern ({e}): {pat[:60]}")
+        cur[kind].append(pat)
+    if not topics:
+        raise RuntimeError("topics.txt has no [Topic] sections")
+    return topics
+
+
 def default_sources():
     src = [(mcp_fetch, lambda: MCP(load_token()))]
     if load_token("FASTMAIL_JMAP_TOKEN", False):
@@ -355,10 +364,7 @@ def run(args, sources=None):
     path = f"{OUT_DIR}/JAMA_{datetime.date(y, m, 1):%B_%Y}.md"
     os.makedirs(OUT_DIR, exist_ok=True)
     os.makedirs(STATE, exist_ok=True)
-    tf = f"{STATE}/topics.json"
-    if not os.path.exists(tf):
-        json.dump(DEFAULT_TOPICS, open(tf, "w"), indent=1)
-    topics = json.load(open(tf))
+    topics = load_topics()
     if os.path.exists(path) and kv.get("force") != "1":
         return f"The {datetime.date(y, m, 1):%B %Y} index already exists at {path}. Re-run with force=1 to rebuild it (the old file is backed up first)."
     emails = fetch_month(sources, y, m)

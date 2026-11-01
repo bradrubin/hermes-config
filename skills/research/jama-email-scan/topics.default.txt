@@ -1,0 +1,32 @@
+# JAMA topics. Edit /Users/hermes/.hermes/state/jama-email-scan/topics.txt (this file is only the starting copy).
+#
+# Each [Heading] becomes a section in the monthly index, in this order.
+# Under it, "core:" and "related:" lines are regular expressions (case-insensitive) matched against
+# each article TITLE. One pattern per line; add as many lines as you like. No quotes, no doubled backslashes.
+#   core:    the article goes in that section.
+#   related: the article goes in "Related but Not Core Matches" (only if it matched no core pattern anywhere).
+# Handy bits: a|b = either, \b = word edge (\bCAC\b), .* = anything between, (cancer|carcinoma) = a choice.
+# Lines starting with # are comments. To drop a topic, delete its block. A bad pattern is reported in the reply.
+
+[Hormone-Sensitive Breast Cancer]
+core: breast (cancer|carcinoma|neoplasm)
+core: (hormone|estrogen|endocrine|tamoxifen|aromatase|letrozole|anastrozole|fulvestrant|CDK4|luminal|HR\+|HR-positive).*breast
+related: \bbreast\b
+related: mammograph
+
+[Prostate Cancer Screening]
+core: prostate
+related: androgen|testosterone|\bPSA\b
+
+[General Medical Overviews for Family Medicine]
+core: primary care
+core: family (medicine|physician)
+core: clinical review
+core: \boverview\b
+core: JAMA Insights
+
+[Calcium Score and Cardiovascular Risk Assessment]
+core: coronary artery calcium
+core: calcium score
+core: \bCAC\b
+related: coronary calcif
