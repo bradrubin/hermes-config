@@ -198,11 +198,11 @@ def fetch_month(sources, y, m):
     return emails
 
 
-LINK = re.compile(r"<(https?://[^>\s]*/t\.do\?id=[^>\s]*)>")
+LINK = re.compile(r"<(https?://[^>\s]*/t\.do\?id=[^>\s]*)>|\((https?://click\.alerts\.jamanetwork\.com/click/[^)\s]+)\)")
 JUNK = re.compile(r", and more$|dr habil|dr rer|dr med|volume \d+|facebook|twitter|linked ?in|pinterest|youtube|instagram|alt content|advertisement|trouble viewing|"
                   r"ideal for sharing|visual abstract|subscribe|podcast|masthead|unsubscribe|thank you for|read it online|sign up|view in browser|released online first", re.I)
 PREFIX = re.compile(r"^((review(?= women.s health)|research summary|audio|less is more|mpp editorial|ma medical news|medical news|original investigation|research letter|brief report|special communication|editorial|comment & response|invited commentary|"
-                    r"viewpoint|clinical review|women.s health|jama (internal medicine|oncology|cardiology|network open|insights|pediatrics|psychiatry|surgery|neurology)|"
+                    r"viewpoint|clinical review|from jama this week|podcast|women.s health|jama (internal medicine|oncology|cardiology|network open|insights|pediatrics|psychiatry|surgery|neurology)|"
                     r"online first|new issue)\b[:\s]*)+", re.I)
 LABEL = re.compile(r"\*[A-Z][A-Za-z&,' -]{3,40}\*\s*")
 AUTHORS = re.compile(r"(\b(MD|PhD|MS|MPH|MSc|DO|RN|MBBS|ScD|DrPH)\b.*;|et al\.?$)")
@@ -215,8 +215,10 @@ def articles(text):
     for mt in LINK.finditer(text):
         seg = text[pos:mt.start()]
         pos = mt.end()
-        if "&a=" in mt.group(1):
+        url = mt.group(1) or mt.group(2)
+        if "&a=" in url:
             continue
+        seg = re.sub(r"https?://\S+", " ", seg)
         chunk = re.split(r"\n\s*\n", seg)[-1]
         parts = LABEL.split(chunk)
         chunk = parts[-1] if parts else chunk
@@ -230,12 +232,12 @@ def articles(text):
                 lines.pop(0)
             title = " ".join(lines).strip()
         title = re.sub(r"^.*\bCollaborators\s+", "", title)
-        m = list(re.finditer(r"\b(MD|PhD|MS|MA|MAS|MPH|DO|MSc|ScD|PharmD)\b\*?[,;]?\s+", title))
+        m = list(re.finditer(r"\b(MD|PhD|MS|MA|MAS|MPH|DO|MSc|ScD|PharmD|MFA|BSN)\b\*?[,;]?\s+|\b(MD|PhD|MPH|MSc|ScD|PharmD|MFA|BSN)(?=[A-Z][a-z]|JAMA)", title))
         if m and len(title) - m[-1].end() >= 15:
             title = title[m[-1].end():]
         title = PREFIX.sub("", title).strip(" ;*")
         if 15 <= len(title) <= 400 and not JUNK.search(title):
-            out.append((title, mt.group(1)))
+            out.append((title, url))
     return out
 
 
@@ -256,7 +258,11 @@ def scan(emails, topics):
         low = e["subject"].lower()
         itype = "Online First" if "online first" in low else "Med News" if "news" in low or "news" in e["from"].lower() else "New Issue" if re.search(r"issue|new", low) else "Email"
         d = datetime.datetime.fromisoformat(e["date"].replace("Z", "+00:00"))
-        for title, url in articles(e["text"]):
+        arts = articles(e["text"])
+        if not arts:
+            subj = PREFIX.sub("", re.sub(r"^(online first|new issue|med news)\s*:\s*", "", e["subject"], flags=re.I)).strip()
+            arts = [(subj, "")] if len(subj) >= 25 and not JUNK.search(subj) else []
+        for title, url in arts:
             hits = classify(topics, title)
             if not hits:
                 continue
