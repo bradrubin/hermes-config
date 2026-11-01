@@ -3,7 +3,7 @@
     {
       "id": "d99f9920d015",
       "name": "JAMA Monthly Scan",
-      "prompt": "Scan JAMA emails for the previous month. Create or update the monthly index file at ~/Documents/JAMA/JAMA_<MonthYear>.md. Follow the jama-email-scan skill for the procedure. Use these topics: hormone-sensitive breast cancer, prostate cancer screening, family medicine overviews, calcium score. Always check ~/Documents/JAMA/ for existing files first. Output files should have no Source email IDs, be sorted by topic, and include a summary header. If a match is found that is tangential (touches a topic secondarily), put it in a \"Related but Not Core Matches\" section.",
+      "prompt": "This is a scheduled cron run. Run the jama-email-scan skill.",
       "skills": [
         "jama-email-scan"
       ],
@@ -82,15 +82,15 @@
       "schedule_display": "every day at 5am",
       "repeat": {
         "times": null,
-        "completed": 10
+        "completed": 11
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-23T21:14:11.634594-05:00",
-      "next_run_at": "2026-11-01T05:00:00-05:00",
-      "last_run_at": "2026-10-31T05:01:30.039978-05:00",
+      "next_run_at": "2026-11-02T05:00:00-06:00",
+      "last_run_at": "2026-11-01T05:01:30.466760-06:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -104,12 +104,12 @@
       "attach_to_session": true,
       "fire_claim": null,
       "canonical_completions": [
-        "a0a1425daac34c1a873dc282cf4c0a1b"
+        "a454359f4cd54827abe933e07f9b120b"
       ],
       "last_dispatch": {
-        "scheduled_at": "2026-10-31T05:00:00-05:00",
-        "dispatched_at": "2026-10-31T05:00:58.768194-05:00",
-        "lateness_seconds": 58.8,
+        "scheduled_at": "2026-11-01T05:00:00-06:00",
+        "dispatched_at": "2026-11-01T05:00:59.189119-06:00",
+        "lateness_seconds": 59.2,
         "kind": "on_time"
       }
     },
@@ -138,15 +138,15 @@
       "schedule_display": "every day at 5:30am",
       "repeat": {
         "times": null,
-        "completed": 8
+        "completed": 9
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-24T08:34:26.007688-05:00",
-      "next_run_at": "2026-11-01T05:30:00-05:00",
-      "last_run_at": "2026-10-31T09:05:07.236012-05:00",
+      "next_run_at": "2026-11-02T05:30:00-06:00",
+      "last_run_at": "2026-11-01T05:32:42.407985-06:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -158,14 +158,14 @@
       "enabled_toolsets": null,
       "workdir": null,
       "last_dispatch": {
-        "scheduled_at": "2026-10-31T05:30:00-05:00",
-        "dispatched_at": "2026-10-31T05:30:58.746780-05:00",
-        "lateness_seconds": 58.7,
+        "scheduled_at": "2026-11-01T05:30:00-06:00",
+        "dispatched_at": "2026-11-01T05:30:59.066372-06:00",
+        "lateness_seconds": 59.1,
         "kind": "on_time"
       },
       "fire_claim": null,
       "canonical_completions": [
-        "d3dfdc5d7b5441379e63c1f4f286137b"
+        "83d9103f44334540864a31850fb724d8"
       ]
     },
     {
@@ -248,16 +248,16 @@
       "schedule_display": "0 3 1 * *",
       "repeat": {
         "times": null,
-        "completed": 0
+        "completed": 1
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-25T08:13:58.168780-05:00",
-      "next_run_at": "2026-11-01T03:00:00-05:00",
-      "last_run_at": null,
-      "last_status": null,
+      "next_run_at": "2026-12-01T03:00:00-06:00",
+      "last_run_at": "2026-11-01T03:01:38.398524-06:00",
+      "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
       "last_delivery_unverified": null,
@@ -266,7 +266,17 @@
       "deliver": "telegram",
       "origin": null,
       "enabled_toolsets": null,
-      "workdir": null
+      "workdir": null,
+      "last_dispatch": {
+        "scheduled_at": "2026-11-01T03:00:00-06:00",
+        "dispatched_at": "2026-11-01T03:00:59.110961-06:00",
+        "lateness_seconds": 59.1,
+        "kind": "on_time"
+      },
+      "fire_claim": null,
+      "canonical_completions": [
+        "72acaffe6df14393897d83a3c582f31d"
+      ]
     },
     {
       "id": "f1b2b1ee8db4",
@@ -291,15 +301,15 @@
       "schedule_display": "every day at 4am",
       "repeat": {
         "times": null,
-        "completed": 6
+        "completed": 7
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-29T12:43:54.140971-05:00",
-      "next_run_at": "2026-11-01T04:00:00-05:00",
-      "last_run_at": "2026-10-31T04:01:03.268796-05:00",
+      "next_run_at": "2026-11-02T04:00:00-06:00",
+      "last_run_at": "2026-11-01T04:01:03.836936-06:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -314,9 +324,9 @@
       "enabled_toolsets": null,
       "workdir": null,
       "last_dispatch": {
-        "scheduled_at": "2026-10-31T04:00:00-05:00",
-        "dispatched_at": "2026-10-31T04:00:58.735716-05:00",
-        "lateness_seconds": 58.7,
+        "scheduled_at": "2026-11-01T04:00:00-06:00",
+        "dispatched_at": "2026-11-01T04:00:59.165314-06:00",
+        "lateness_seconds": 59.2,
         "kind": "on_time"
       },
       "fire_claim": null,
@@ -349,15 +359,15 @@
       "schedule_display": "30 4 * * *",
       "repeat": {
         "times": null,
-        "completed": 1
+        "completed": 2
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-30T12:41:26.526914-05:00",
-      "next_run_at": "2026-11-01T04:30:00-05:00",
-      "last_run_at": "2026-10-31T04:32:04.064070-05:00",
+      "next_run_at": "2026-11-02T04:30:00-06:00",
+      "last_run_at": "2026-11-01T04:32:09.184857-06:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -369,14 +379,14 @@
       "enabled_toolsets": null,
       "workdir": null,
       "last_dispatch": {
-        "scheduled_at": "2026-10-31T04:30:00-05:00",
-        "dispatched_at": "2026-10-31T04:30:58.749482-05:00",
-        "lateness_seconds": 58.7,
+        "scheduled_at": "2026-11-01T04:30:00-06:00",
+        "dispatched_at": "2026-11-01T04:30:59.162792-06:00",
+        "lateness_seconds": 59.2,
         "kind": "on_time"
       },
       "fire_claim": null,
       "canonical_completions": [
-        "f2e0a90d22e24a3caed905217fd613a8"
+        "04b49077e20446da9d4b0b3f658d1fc1"
       ]
     },
     {
@@ -404,39 +414,39 @@
       "schedule_display": "15 4 * * *",
       "repeat": {
         "times": null,
-        "completed": 1
+        "completed": 2
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-30T14:12:07.423186-05:00",
-      "next_run_at": "2026-11-01T04:15:00-05:00",
-      "last_run_at": "2026-10-31T04:16:30.065429-05:00",
-      "last_status": "error",
-      "last_error": "Duluth price check failed: the price call returned data that could not be read\nTIMING: total 3.8s (page_load 2.6s, failed 1.2s)",
+      "next_run_at": "2026-11-02T04:15:00-06:00",
+      "last_run_at": "2026-11-01T04:16:12.400809-06:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "last_delivery_unverified": null,
       "last_failure": {
         "at": "2026-10-31T04:16:30.065429-05:00",
         "detail": "Duluth price check failed: the price call returned data that could not be read\nTIMING: total 3.8s (page_load 2.6s, failed 1.2s)"
       },
-      "failure_streak": 1,
+      "failure_streak": 0,
       "deliver": "telegram",
       "origin": null,
       "enabled_toolsets": null,
       "workdir": null,
       "last_dispatch": {
-        "scheduled_at": "2026-10-31T04:15:00-05:00",
-        "dispatched_at": "2026-10-31T04:15:58.753624-05:00",
-        "lateness_seconds": 58.8,
+        "scheduled_at": "2026-11-01T04:15:00-06:00",
+        "dispatched_at": "2026-11-01T04:15:59.151331-06:00",
+        "lateness_seconds": 59.2,
         "kind": "on_time"
       },
       "fire_claim": null,
       "canonical_completions": [
-        "a6d5405fb8564c2a800ca1330c8d79cb"
+        "dd0449adba304eaba60f4f5a40632bcc"
       ]
     }
   ],
-  "updated_at": "2026-11-01T00:54:00.436889-05:00"
+  "updated_at": "2026-11-01T05:32:42.409662-06:00"
 }
