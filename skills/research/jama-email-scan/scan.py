@@ -31,8 +31,8 @@ DEFAULT_TOPICS = {
                  r"(hormone|estrogen|endocrine|tamoxifen|aromatase|letrozole|anastrozole|fulvestrant|CDK4|luminal|ER-positive|HR\+|HR-positive).*breast"],
         "related": [r"breast (cancer|carcinoma|neoplasm)"]},
     "Prostate Cancer Screening": {
-        "core": [r"prostate.*(screen|PSA|prostate-specific|early detection|MRI|biops)",
-                 r"(screen|PSA|prostate-specific|early detection).*prostate"],
+        "core": [r"prostate.*(screen|PSA|prostate-specific antigen|early detection|MRI|biops)",
+                 r"(screen|PSA|prostate-specific antigen|early detection).*prostate"],
         "related": [r"prostate"]},
     "General Medical Overviews for Family Medicine": {
         "core": [r"primary care", r"family (medicine|physician)", r"clinical review", r"\boverview\b", r"JAMA Insights"],
@@ -41,7 +41,7 @@ DEFAULT_TOPICS = {
         "core": [r"coronary artery calcium", r"calcium score", r"\bCAC\b"],
         "related": [r"coronary calcif"]},
 }
-HEADERS = {"original investigation", "research letter", "viewpoint", "special communication", "review", "editorial",
+_UNUSED = {"original investigation", "research letter", "viewpoint", "special communication", "review", "editorial",
            "comment & response", "brief report", "clinical review", "jama insights", "online first", "new issue"}
 
 
@@ -218,21 +218,39 @@ def fetch_month(sources, y, m):
     return emails
 
 
-def blocks(text):
-    text = re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)", r"\1 \2", text)
-    out = []
-    for b in re.split(r"\n\s*\n", text):
-        lines = [re.sub(r"\s+", " ", l).strip(" *_#>") for l in b.splitlines()]
+LINK = re.compile(r"<(https?://[^>\s]*/t\.do\?id=[^>\s]*)>")
+JUNK = re.compile(r"volume \d+|facebook|twitter|linked ?in|pinterest|youtube|instagram|alt content|advertisement|trouble viewing|"
+                  r"ideal for sharing|visual abstract|subscribe|podcast|masthead|unsubscribe|thank you for|read it online|sign up|view in browser|released online first", re.I)
+PREFIX = re.compile(r"^((original investigation|research letter|brief report|special communication|editorial|comment & response|invited commentary|"
+                    r"viewpoint|clinical review|women.s health|jama (internal medicine|oncology|cardiology|network open|insights|pediatrics|psychiatry|surgery|neurology)|"
+                    r"online first|new issue)\b[:\s]*)+", re.I)
+LABEL = re.compile(r"\*[A-Z][A-Za-z&,' -]{3,40}\*\s*")
+AUTHORS = re.compile(r"(\b(MD|PhD|MS|MPH|MSc|DO|RN|MBBS|ScD|DrPH)\b.*;|et al\.?$)")
+
+
+def articles(text):
+    """[(title, url)]: the text just before each article click-link in a JAMA email."""
+    text = re.sub(r"\[([^\]]+)\]\((https?://[^)\s]+)\)", r"\1 <\2>", text)
+    out, pos = [], 0
+    for mt in LINK.finditer(text):
+        seg = text[pos:mt.start()]
+        pos = mt.end()
+        if "&a=" in mt.group(1):
+            continue
+        chunk = re.split(r"\n\s*\n", seg)[-1]
+        parts = LABEL.split(chunk)
+        chunk = parts[-1] if parts else chunk
+        lines = [re.sub(r"\s+", " ", l).strip(" *_#>") for l in chunk.splitlines()]
         lines = [l for l in lines if l]
-        if not lines:
-            continue
-        url = next((u for l in lines for u in re.findall(r"https?://\S+", l)), "")
-        words = [re.sub(r"https?://\S+", "", l).strip() for l in lines]
-        words = [w for w in words if w]
-        if url and not words and out and not out[-1]["url"]:
-            out[-1]["url"] = url
-            continue
-        out.append({"lines": words, "url": url})
+        while lines and AUTHORS.search(lines[0]):
+            lines.pop(0)
+        title = " ".join(lines).strip()
+        m = list(re.finditer(r"\b(MD|PhD|MS|MPH|DO|MSc|ScD)\b\*?[,;]?\s+", title))
+        if m and len(title) - m[-1].end() >= 15:
+            title = title[m[-1].end():]
+        title = PREFIX.sub("", title).strip(" ;*")
+        if 15 <= len(title) <= 400 and not JUNK.search(title):
+            out.append((title, mt.group(1)))
     return out
 
 
@@ -250,21 +268,17 @@ def classify(topics, text):
 def scan(emails, topics):
     found = {}
     for e in emails:
-        subj = e["subject"]
-        low = subj.lower()
+        low = e["subject"].lower()
         itype = "Online First" if "online first" in low else "Med News" if "news" in low or "news" in e["from"].lower() else "New Issue" if re.search(r"issue|new", low) else "Email"
         d = datetime.datetime.fromisoformat(e["date"].replace("Z", "+00:00"))
-        for b in blocks(e["text"]):
-            body = [l for l in b["lines"] if l.lower() not in HEADERS]
-            if not body or len(body[0]) < 15 or len(body[0]) > 400:
-                continue
-            hits = classify(topics, " ".join(b["lines"]))
+        for title, url in articles(e["text"]):
+            hits = classify(topics, title)
             if not hits:
                 continue
-            key = re.sub(r"\W+", "", body[0].lower())
-            ent = found.setdefault(key, {"title": body[0], "journal": e["from"] or "JAMA", "date": d, "type": itype, "url": b["url"], "hits": {}})
-            if b["url"] and not ent["url"]:
-                ent["url"] = b["url"]
+            key = re.sub(r"\W+", "", title.lower())
+            ent = found.setdefault(key, {"title": title, "journal": e["from"] or "JAMA", "date": d, "type": itype, "url": url, "hits": {}})
+            if d < ent["date"]:
+                ent.update(date=d, type=itype, journal=e["from"] or "JAMA", url=url)
             for cat, kind in hits:
                 if ent["hits"].get(cat) != "core":
                     ent["hits"][cat] = kind
