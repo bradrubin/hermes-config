@@ -6,13 +6,13 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-10-30T19:12:58.623110+00:00",
+    "last_used_at": "2026-10-31T09:30:58.993384+00:00",
     "last_viewed_at": "2026-10-30T19:12:58.620712+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 4,
+    "use_count": 5,
     "view_count": 4
   },
   "arxiv": {
@@ -102,13 +102,13 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-10-30T10:00:09.457784+00:00",
+    "last_used_at": "2026-10-31T10:00:59.008605+00:00",
     "last_viewed_at": "2026-10-24T02:14:45.415957+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 10,
+    "use_count": 11,
     "view_count": 1
   },
   "dogfood": {
@@ -134,14 +134,14 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-10-30T19:09:57.241048+00:00",
-    "last_viewed_at": "2026-10-30T19:09:57.238749+00:00",
+    "last_used_at": "2026-10-31T13:00:27.210713+00:00",
+    "last_viewed_at": "2026-10-31T13:00:27.207865+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 10,
-    "view_count": 10
+    "use_count": 15,
+    "view_count": 14
   },
   "email-inbox-triage": {
     "archived_at": null,
@@ -310,14 +310,14 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-10-25T13:17:39.803281+00:00",
-    "last_viewed_at": "2026-10-25T13:17:39.800740+00:00",
+    "last_used_at": "2026-11-01T05:01:24.660359+00:00",
+    "last_viewed_at": "2026-11-01T05:01:24.659403+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 15,
-    "view_count": 7
+    "use_count": 17,
+    "view_count": 8
   },
   "llm-wiki": {
     "archived_at": null,
@@ -422,13 +422,13 @@
     "first_seen_at": null,
     "last_patched_at": "2026-10-21T15:19:33.757719+00:00",
     "last_reused_patch_generation": 3,
-    "last_used_at": "2026-10-30T19:45:10.308542+00:00",
+    "last_used_at": "2026-10-31T14:03:05.389519+00:00",
     "last_viewed_at": "2026-10-30T19:45:10.305774+00:00",
     "patch_count": 3,
     "patch_generation": 3,
     "pinned": false,
     "state": "active",
-    "use_count": 10,
+    "use_count": 12,
     "view_count": 4
   },
   "spike": {
