@@ -613,7 +613,17 @@ def _tpaw_main(args):
         try:
             import shlex, subprocess
             cmd = shlex.split(os.environ.get("TPAW_SEND_CMD", "/Users/hermes/.local/bin/hermes send --to telegram"))
-            r = subprocess.run(cmd + ["\n".join(lines)], capture_output=True, text=True, timeout=90)
+            msg = []   # Telegram formatting: header line, then a bulleted list with bold labels, then TIMING and the attachment
+            for i, l in enumerate(lines):
+                if i == 0 or not l.strip() or l.startswith(("MEDIA:", "TIMING:")):
+                    msg.append(l)
+                else:
+                    for lab in ("Page", "Monthly spending (first point)", "Stocks", "Portfolio balance", "Missing expected values", "Checks"):
+                        if l.startswith(lab):
+                            l = f"**{lab}**" + l[len(lab):]
+                            break
+                    msg.append("- " + l)
+            r = subprocess.run(cmd + ["\n".join(msg)], capture_output=True, text=True, timeout=90)
             if r.returncode == 0:
                 print("REPLY START")
                 print("[SILENT]")
