@@ -1,12 +1,14 @@
 ---
 name: spam-bypass
-description: Use when a spammer emailed your bsrubin@stthomas.edu or bradrubin@bradrubin.com asking about business services and/or a meeting — search Fastmail inbox for today/previous day, craft a multi-paragraph confusing reply for each sender, create as email Drafts in the user's Fastmail client. NEVER send the drafts.
-version: 1.1.0
+description: Draft confusing replies to business-spam emails
+version: 1.1.1
 ---
 
 # Spam Bypass — Confusing Reply Generator
 
 ## When to use
+Triggers: "run spam-bypass", a spammer emailed bsrubin@stthomas.edu or bradrubin@bradrubin.com about business services or a meeting. Search the Fastmail inbox for today and the previous day, draft a reply per sender, NEVER send.
+
 A spammer emailed `bsrubin@stthomas.edu` or `bradrubin@bradrubin.com` asking about business services and/or asking to schedule a meeting. The goal is to waste their time so they have an economic incentive to remove the address from their mailing list.
 
 ## Procedure
