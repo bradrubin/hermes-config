@@ -1,7 +1,7 @@
 # tpaw-load v3: the whole skill in one browser_exec call.
 #   ARGS = "1468825"; exec(open("/Users/hermes/.hermes/skills/finance/tpaw-load/tpaw.py").read(), globals())
 # ARGS (optional): a dollar amount for the new portfolio balance and/or a plan .txt path.
-# ARGS word "cron": on failure the reply starts with [CRON_FAILURE] (Hermes then records the run as failed).
+# ARGS word "cron": on success the script sends the report via `hermes send` and replies [SILENT]; on failure the reply starts with [CRON_FAILURE] (Hermes then records the run as failed).
 # Always ends by printing a REPLY START / REPLY END block, even on failure.
 # Everything lives inside one function so it doesn't clutter the browser session's globals,
 # and nothing is imported from the skill folder (the session caches imports across calls).
@@ -606,6 +606,21 @@ def _tpaw_main(args):
 
     if cron and not ok:
         lines.insert(0, "[CRON_FAILURE]")
+
+    # Cron success: the script delivers the report itself (the model rewords or drops lines when it copies),
+    # then the model's whole reply is [SILENT]. If the send fails, fall through to the normal reply block.
+    if cron and ok:
+        try:
+            import shlex, subprocess
+            cmd = shlex.split(os.environ.get("TPAW_SEND_CMD", "/Users/hermes/.local/bin/hermes send --to telegram"))
+            r = subprocess.run(cmd + ["\n".join(lines)], capture_output=True, text=True, timeout=90)
+            if r.returncode == 0:
+                print("REPLY START")
+                print("[SILENT]")
+                print("REPLY END")
+                return
+        except Exception:
+            pass
     print("REPLY START")
     print("\n".join(lines))
     print("REPLY END")

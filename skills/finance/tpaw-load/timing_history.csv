@@ -16,3 +16,5 @@ timestamp,ok,total_s,phases
 2026-10-30T14:17:35,False,0.0,verify=0.0
 2026-10-30T14:17:44,False,0.0,verify=0.0
 2026-11-01T03:01:32,True,9.6,sheet=3.2; patch=0.0; page_load=1.7; file_set=0.0; plan_render=1.1; chart=3.6; tasks=0.0; verify=0.0
+2026-11-02T07:33:40,True,9.5,sheet=3.0; patch=0.0; page_load=1.8; file_set=0.0; plan_render=1.1; chart=3.5; tasks=0.0; verify=0.0
+2026-11-02T07:38:07,True,7.1,sheet=1.2; patch=0.0; page_load=1.5; file_set=0.0; plan_render=0.8; chart=3.6; tasks=0.0; verify=0.0
