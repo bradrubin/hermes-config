@@ -1,7 +1,7 @@
 ---
 name: spam-bypass
 description: Draft confusing replies to business-spam emails
-version: 1.1.1
+version: 1.1.2
 ---
 
 # Spam Bypass — Confusing Reply Generator
@@ -13,14 +13,13 @@ A spammer emailed `bsrubin@stthomas.edu` or `bradrubin@bradrubin.com` asking abo
 
 ## Procedure
 
-1. **Search Fastmail inbox ONLY** for spam emails to either address for today or the previous day. Crucially, the search MUST only return emails in the **Inbox** folder (id `P-F`, role `inbox`), NOT emails in Trash, Spam, Archive, or any other folder. After getting results, verify the folder field of each result is `"role":"inbox"` before proceeding.
+1. **Search the Fastmail Inbox only.** Put `in:inbox` in every query so Trash, Spam and Archive are never searched or returned. Never search or read any other folder.
    ```
-   mcp__fastmail__search_email with query: "to:bsrubin@stthomas.edu after:today-1d"
-   mcp__fastmail__search_email with query: "to:bradrubin@bradrubin.com after:today-1d"
+   mcp__fastmail__search_email with query: "in:inbox to:bsrubin@stthomas.edu after:yesterday"
+   mcp__fastmail__search_email with query: "in:inbox to:bradrubin@bradrubin.com after:yesterday"
    ```
-   (If date parsing fails, use `after:7d` or search more broadly, then filter by date manually.)
+   (If date parsing fails, use `after:2d`.)
    Read each candidate email with `mcp__fastmail__read_email` to confirm it's a business solicitation / meeting request.
-   - IMPORTANT: If an email appears in the search results but has been deleted (folder is Trash), SKIP IT. The user has already handled deleted emails. Only act on emails that are currently in the Inbox.
 
 2. **For each spam email found:**
    - Identify the sender's name, email, and what they're asking for
