@@ -1,25 +1,24 @@
 ---
 name: spam-bypass
 description: Draft confusing replies to business-spam emails
-version: 1.1.2
+version: 1.2.0
 ---
 
 # Spam Bypass — Confusing Reply Generator
 
 ## When to use
-Triggers: "run spam-bypass", a spammer emailed bsrubin@stthomas.edu or bradrubin@bradrubin.com about business services or a meeting. Search the Fastmail inbox for today and the previous day, draft a reply per sender, NEVER send.
+Triggers: "run spam-bypass", a spammer emailed Brad about business services or a meeting. Search the Fastmail inbox for today and the previous day, draft a reply per sender, NEVER send.
 
-A spammer emailed `bsrubin@stthomas.edu` or `bradrubin@bradrubin.com` asking about business services and/or asking to schedule a meeting. The goal is to waste their time so they have an economic incentive to remove the address from their mailing list.
+A spammer emailed Brad (at any of his addresses or aliases, e.g. `bsrubin@stthomas.edu`, `bradrubin@bradrubin.com`, `brad@bradrubin.com`) asking about business services and/or asking to schedule a meeting. The goal is to waste their time so they have an economic incentive to remove the address from their mailing list.
 
 ## Procedure
 
-1. **Search the Fastmail Inbox only.** Put `in:inbox` in every query so Trash, Spam and Archive are never searched or returned. Never search or read any other folder.
+1. **Search the Fastmail Inbox only.** Do NOT filter by recipient: spammers use many of Brad's addresses and aliases. Make one call:
    ```
-   mcp__fastmail__search_email with query: "in:inbox to:bsrubin@stthomas.edu after:yesterday"
-   mcp__fastmail__search_email with query: "in:inbox to:bradrubin@bradrubin.com after:yesterday"
+   mcp__fastmail__search_email with query: "in:inbox after:yesterday", limit: 50
    ```
-   (If date parsing fails, use `after:2d`.)
-   Read each candidate email with `mcp__fastmail__read_email` to confirm it's a business solicitation / meeting request.
+   (If date parsing fails, use `after:2d`. If `hasMore` is true, fetch the next page with `cursor`.) Never search or read any other folder.
+   Judge each result by sender and preview. A business solicitation is an unknown sender offering services (financing, lead generation, marketing, staffing, software) or asking for a call or meeting. Family, friends, newsletters, receipts and notices are not. Read only likely solicitations with `mcp__fastmail__read_email` to confirm.
 
 2. **For each spam email found:**
    - Identify the sender's name, email, and what they're asking for
@@ -46,7 +45,7 @@ A spammer emailed `bsrubin@stthomas.edu` or `bradrubin@bradrubin.com` asking abo
      - <sender name or email>: Re: <original subject>
      ```
      One `-` line per draft. Use `draft` for 1 and `drafts` for more.
-   - **No drafts created** (nothing found, or everything found was already handled): reply with exactly `[SILENT]` and nothing else. No explanation, no summary of what was searched.
+   - **No drafts created** (nothing found, or everything found was already handled): reply with exactly `[SILENT]` and nothing else. The first and only characters of the reply are `[SILENT]`. No explanation, no list of emails you reviewed, no summary of what was searched, even if you are unsure.
    - **A `draft_email` call failed:** put `[CRON_FAILURE]` alone on line 1, then say which sender failed. Still list any drafts that did succeed.
    Do NOT write local text files for the user.
 
