@@ -1,7 +1,7 @@
 ---
 name: tbill-roll
 description: Find replacement T-bills for auto-rolled bills
-version: 1.2.0
+version: 1.2.1
 author: Hermes Agent
 ---
 

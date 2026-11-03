@@ -1,7 +1,7 @@
 ---
 name: amazon-price-watch
 description: Daily Amazon price-drop check for a watch list
-version: 1.0.4
+version: 1.0.5
 author: Hermes Agent
 ---
 

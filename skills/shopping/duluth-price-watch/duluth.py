@@ -307,8 +307,18 @@ true
         lines.append(f"Duluth price alert: {n} solid color{'s' if n > 1 else ''} at or under ${LIMIT:.2f} for one pair.")
         lines += [line(r) for r in solid_hits]
     if unsure:
-        lines.append("Not sure if these colors are solid or patterned. Reply solid or pattern for each and I will record it:")
+        lines.append("Not sure if these colors are solid or patterned. Each is now listed as unknown in "
+                     "~/.hermes/state/duluth-price-watch/solid_colors.txt. Change unknown to solid or pattern there:")
         lines += [line(r) for r in unsure]
+        if not test:   # leave a note in the user's list, so the answer is one word to edit
+            try:
+                have = open(COLORS).read().lower()
+                with open(COLORS, "a") as f:
+                    for nm in sorted({r["color"] for r in unsure}):
+                        if "|" + nm.lower() not in have:
+                            f.write(f"unknown|{nm}\n")
+            except OSError:
+                pass
     if lines:
         if test:
             lines.insert(0, f"(TEST RUN with limit ${LIMIT:.2f}. These are not real deals.)")

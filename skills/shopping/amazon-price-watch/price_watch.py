@@ -97,7 +97,7 @@ def _pw_main():
     try:
         raw = open(ITEMS).read()
     except FileNotFoundError:
-        return fail(f"item list missing ({ITEMS}). Re-run the installer.")
+        return fail(f"item list missing ({ITEMS})")
     ids, seen = [], set()
     for line in raw.splitlines():
         tok = line.split("#", 1)[0].strip().replace("-", "").upper()

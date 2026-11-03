@@ -1,7 +1,7 @@
 ---
 name: duluth-price-watch
 description: Nightly Duluth Buck Naked boxer price check
-version: 1.0.2
+version: 1.0.3
 author: Hermes Agent
 ---
 
@@ -31,7 +31,7 @@ On a chat run the output has a line `REPLY START`, then the reply, then a line `
 
 In both cases, copy failures as printed, including any `[CRON_FAILURE]` line. Do not summarize, explain, add advice, or add headings. Do not turn the list into a table.
 
-Copy it exactly. `[SILENT]` and `[CRON_FAILURE]` are delivery markers that Hermes reads only when they are the very first thing in your reply, and the prices, colors and links are already checked. Anything you add in front of them makes Hermes send a message that should have been silent. Rewording, reformatting or adding to the reply gives the user wrong numbers. If a line asks the user a question, copy it as is.
+Copy it exactly. `[SILENT]` and `[CRON_FAILURE]` are delivery markers that Hermes reads only when they are the very first thing in your reply, and the prices, colors and links are already checked. Anything you add in front of them makes Hermes send a message that should have been silent. Rewording, reformatting or adding to the reply gives the user wrong numbers. If a line asks the user to edit the colors file, copy it as is.
 
 ## Rules
 

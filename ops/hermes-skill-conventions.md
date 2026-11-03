@@ -92,3 +92,11 @@ When one step failed, Qwen read the scripts, hand-wrote JSON, clicked around the
 - A dev harness for driving a tab of the Mini's Chrome from the terminal needs `websockets`: use the venv under `~/.hermes/installs/*/environments/*/venv/bin/python3`. Open your own tab with `PUT /json/new`, close it after.
 - The guest token in `localStorage.authToken` persists in Chrome between runs and expires in ~30 min. An expired one makes the API return HTTP 200 with an "Unauthorized" JSON body (no `data`), not a 401. Check the JWT `exp`; if expired, `removeItem('authToken')` and `Page.navigate` to the product page (in Hermes's tab `Page.reload` did not mint a new token, navigate did).
 - See duluth-price-watch v1.0.1 (`duluth.py`) for the reference implementation.
+
+## Reviews and cron (learned from the Nov 2026 skill review)
+- Cron cron-expressions with both day-of-month and day-of-week ("0 3 1 * 1") fire on EITHER, once per day. Use one job instead of two jobs that can land on the same day and drive the same Chrome tab.
+- Never put a real value in a SKILL.md example command (a `month=2026-10` line got copied on every cron run). Use a neutral default and list the optional keys separately.
+- Daily jobs that make side effects (drafts, emails) must record what they handled in `state/<skill>/` so overlapping search windows never repeat the work.
+- Keep the cron job prompt short ("Run the <skill> skill."). A longer prompt can contradict the skill.
+- A browser skill must undo what it changes in the shared Chrome session (viewport override, page hooks).
+- Testing scripts that read Google Sheets: run with the Hermes venv python (`ls ~/.hermes/installs/*/environments/*/venv/bin/python3`); system python3 lacks the Google libraries.

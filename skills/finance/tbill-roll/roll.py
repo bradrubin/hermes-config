@@ -380,7 +380,7 @@ def run(today, cron=False):
             and not has_row(r["fund"], None, r["maturity"])]
     debug = {"run_at": dt.datetime.now().isoformat(timespec="seconds"), "today": today.isoformat(),
              "sheet_rows": len(rows), "candidates": [], "new_rows": [], "source": None}
-    new_rows, warnings, upcoming = [], [], []
+    new_rows, warnings = [], []
     if todo:
         auctions, source, nrec = load_auctions(min(r["maturity"] for r in todo), today)
         debug["source"] = f"{source} ({nrec} records, {len(auctions)} with results)"
@@ -389,14 +389,16 @@ def run(today, cron=False):
             cur, steps = r, 0
             debug["candidates"].append({k: str(v) for k, v in r.items()})
             while steps < 20:
-                rep = find_replacement(auctions, cur["maturity"], int(cur["weeks"]))
+                try:
+                    rep = find_replacement(auctions, cur["maturity"], int(cur["weeks"]))
+                except Stop as e:   # one ambiguous bill must not hide the other funds
+                    warnings.append(f"{cur['fund']} ({cur['cusip']}): {e}. Check Fidelity.")
+                    break
                 if not rep:
                     if cur["maturity"] <= today:
                         warnings.append(f"No auction result found for the {int(cur['weeks'])}-week bill that "
                                         f"replaced {cur['cusip']} ({cur['fund']}, matured "
                                         f"{fmt_date(cur['maturity'])}). Check Fidelity.")
-                    else:
-                        upcoming.append(cur)
                     break
                 if has_row(cur["fund"], rep["cusip"], rep["issue"]):
                     break
@@ -470,11 +472,13 @@ def run(today, cron=False):
 def main():
     today = dt.date.today()
     args = sys.argv[1:]
+    global STATE_DIR
     script = "script" in args   # no_agent cron job: no model. Silent = no output, failure = exit 1, else print the alert
     cron = "cron" in args or script   # cron: quiet unless there is something new to act on; failures get [CRON_FAILURE]
     for a in args:
         if re.fullmatch(r"\d{4}-\d{2}-\d{2}", a):
-            today = dt.date.fromisoformat(a)   # for testing
+            today = dt.date.fromisoformat(a)   # for testing: keep state out of the real state dir
+            STATE_DIR = os.path.join(WORK_DIR, "test_state")
     failed = False
     try:
         lines, path = run(today, cron)

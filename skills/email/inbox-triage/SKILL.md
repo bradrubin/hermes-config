@@ -1,7 +1,7 @@
 ---
 name: inbox-triage
 description: "Triage past week's Fastmail inbox toward inbox zero"
-version: 1.4.2
+version: 1.4.3
 author: Hermes Agent
 ---
 
