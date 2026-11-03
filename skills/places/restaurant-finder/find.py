@@ -157,7 +157,7 @@ def parse_args(text, today):
     try:
         miles = float(a.get("miles", "3"))
         min_rating = float(a.get("min_rating", "0") or 0)
-        min_reviews = int(float(a.get("min_reviews", "20") or 0))
+        min_reviews = int(float(a.get("min_reviews") or 20))
     except ValueError:
         raise Fail("miles, min_rating and min_reviews must be numbers")
     if not 0 < miles <= 30:
@@ -169,7 +169,7 @@ def parse_args(text, today):
     if not cuisines:
         raise Fail(f"no supported cuisine in '{a.get('cuisine')}' (supported: {', '.join(CUISINES)})")
     excl = [w.strip().lower() for w in a.get("exclude", "").split(",") if w.strip()]
-    styles = [w.strip().lower() for w in a.get("style", "any").split(",") if w.strip()]
+    styles = [w.strip().lower() for w in a.get("style", "").split(",") if w.strip()] or ["any"]
     styles = ["quick" if s in ("fast", "quick service", "counter") else s for s in styles]
     meal = a.get("meal", "lunch").lower()
     if meal not in MEALS:
@@ -479,7 +479,9 @@ def us_holidays(year):
             return d
         d = datetime.date(year, month + 1, 1) - datetime.timedelta(days=1) if month < 12 else datetime.date(year, 12, 31)
         return d - datetime.timedelta(days=(d.weekday() - weekday) % 7)
-    return {datetime.date(year, 1, 1): "New Year's Day", nth(5, 0, -1): "Memorial Day",
+    return {datetime.date(year, 1, 1): "New Year's Day", nth(1, 0, 3): "Martin Luther King Jr. Day",
+            datetime.date(year, 6, 19): "Juneteenth", datetime.date(year, 11, 11): "Veterans Day",
+            nth(10, 0, 2): "Columbus Day", nth(5, 0, -1): "Memorial Day",
             datetime.date(year, 7, 4): "Independence Day", nth(9, 0, 1): "Labor Day",
             nth(11, 3, 4): "Thanksgiving", nth(11, 3, 4) + datetime.timedelta(days=1): "the day after Thanksgiving",
             datetime.date(year, 12, 24): "Christmas Eve", datetime.date(year, 12, 25): "Christmas",
