@@ -80,14 +80,16 @@ pattern|WD-40
                         f"{status},{total:.1f},\"{'; '.join(parts)}\"\n")
         except Exception:
             pass
-        print("REPLY START")
+        if not cron:
+            print("REPLY START")
         if lines and lines[0].startswith("[SILENT]"):
             lines = [f"{lines[0]} {tl}"]  # one line: Qwen drops a separate TIMING line from a silent reply
         else:
             lines = lines + [tl]
         for ln in lines:
             print(ln)
-        print("REPLY END")
+        if not cron:
+            print("REPLY END")
 
     def fail(reason):
         # Failures always reach Telegram: [CRON_FAILURE] alone on line 1 marks the run failed.
@@ -326,8 +328,11 @@ true
 try:
     _dl_main()
 except Exception as _e:  # last-resort: always give the model a complete reply
-    print("REPLY START")
-    if "cron" in str(globals().get("ARGS", "")).lower():
+    _cron = "cron" in str(globals().get("ARGS", "")).lower()
+    if not _cron:
+        print("REPLY START")
+    else:
         print("[CRON_FAILURE]")
     print(f"Duluth price check failed: unexpected error ({type(_e).__name__}: {str(_e)[:150]})")
-    print("REPLY END")
+    if not _cron:
+        print("REPLY END")

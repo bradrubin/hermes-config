@@ -1,7 +1,7 @@
 ---
 name: duluth-price-watch
 description: Nightly Duluth Buck Naked boxer price check
-version: 1.0.1
+version: 1.0.2
 author: Hermes Agent
 ---
 
@@ -25,9 +25,13 @@ Use a `timeout_s` of 120. The script opens Duluth's site, reads every price, app
 
 ## Your reply
 
-The script's output has a line `REPLY START`, then the reply, then a line `REPLY END`. Your final reply is only the lines in between, copied character for character. Do NOT write the `REPLY START` or `REPLY END` lines themselves: the first character of your reply is the first character of the line after `REPLY START`. This applies to failures too: copy the failure lines as printed, including any `[CRON_FAILURE]` line. Do not summarize, explain, add advice, or add headings. Do not turn the list into a table.
+On a cron run the script prints only the finished reply (no marker lines). Your final reply is the script's entire output, copied character for character: the first character of your reply is the first character the script printed. Add nothing before or after it.
 
-Copy it exactly. `[SILENT]` and `[CRON_FAILURE]` are delivery markers that Hermes reads only when they are the very first thing in your reply (so `REPLY START` in your reply would break them), and the prices, colors and links are already checked. Rewording, reformatting or adding to the reply breaks delivery and gives the user wrong numbers. If a line asks the user a question, copy it as is.
+On a chat run the output has a line `REPLY START`, then the reply, then a line `REPLY END`. Your final reply is only the lines in between. Do NOT write the `REPLY START` or `REPLY END` lines themselves.
+
+In both cases, copy failures as printed, including any `[CRON_FAILURE]` line. Do not summarize, explain, add advice, or add headings. Do not turn the list into a table.
+
+Copy it exactly. `[SILENT]` and `[CRON_FAILURE]` are delivery markers that Hermes reads only when they are the very first thing in your reply, and the prices, colors and links are already checked. Anything you add in front of them makes Hermes send a message that should have been silent. Rewording, reformatting or adding to the reply gives the user wrong numbers. If a line asks the user a question, copy it as is.
 
 ## Rules
 
