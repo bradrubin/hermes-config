@@ -1,7 +1,7 @@
 ---
 name: jama-email-scan
-description: Scan JAMA emails for topic matches and build a monthly index.
-version: 1.2.1
+description: Scan JAMA emails by topic into a monthly index
+version: 1.2.2
 author: Brad Rubin, Hermes Agent
 license: MIT
 platforms: [macos]
@@ -18,16 +18,17 @@ One script reads the Fastmail JAMA folder, matches topics, writes `~/Documents/J
 
 ## Steps
 
-1. Run exactly one terminal command. Put the settings on one line, `key=value; key=value`:
-   - `month=YYYY-MM` only if the user named a month; otherwise omit it (the script picks the latest unscanned month).
-   - `force=1` only if the user asked to rebuild an existing month.
-   - `cron=1` if this is a scheduled/cron run with no user chat.
+1. Run exactly one terminal command. Put the settings on one line, `key=value; key=value`. Use this line exactly, and change it only as listed below:
 
 ```
 python3 /Users/hermes/.hermes/skills/research/jama-email-scan/scan.py <<'ARGS'
-month=2026-10
+cron=0
 ARGS
 ```
+
+   - Replace `cron=0` with `cron=1` if this is a scheduled/cron run with no user chat.
+   - Add `; month=YYYY-MM` ONLY if the user named a month. Otherwise never write `month` (the script picks the latest unscanned month).
+   - Add `; force=1` ONLY if the user asked to rebuild an existing month.
 
 2. Reply with the text between REPLY START and REPLY END, exactly as printed. Do NOT write the REPLY START or REPLY END lines; the first character of your reply is the first character after REPLY START. Keep the `MEDIA:` line (without it the file does not attach) and the TIMING line.
 

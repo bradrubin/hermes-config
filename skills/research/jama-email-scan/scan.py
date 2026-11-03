@@ -419,7 +419,11 @@ def main(args):
     try:
         r = run(args)
         if isinstance(r, str):
-            return "REPLY START\n" + r + "\nREPLY END"
+            mark("done")
+            tl = timing()
+            if r.startswith("[SILENT]"):   # TIMING on the same line, or Qwen drops it
+                return "REPLY START\n" + r + " " + tl + "\nREPLY END"
+            return "REPLY START\n" + r + "\n" + tl + "\nREPLY END"
         emails, core, rel, path, att, y, m = r
         return ("REPLY START\n"
                 f"JAMA scan for {datetime.date(y, m, 1):%B %Y}: scanned {len(emails)} emails and found {core} core articles plus {rel} related ones. "
