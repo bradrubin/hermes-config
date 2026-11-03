@@ -166,6 +166,7 @@ def python_candidates(cfg, tool):
     c = []
     if cfg.get("python"):
         c.append(os.path.expanduser(cfg["python"]))
+    c += sorted(glob.glob(os.path.expanduser("~/.hermes/installs/*/environments/*/venv/bin/python3")))   # Hermes's own venv has the Google libraries
     d = os.path.dirname(tool)
     for _ in range(6):   # a venv next to (or above) the Google skill
         for v in ("venv", ".venv", "env"):
