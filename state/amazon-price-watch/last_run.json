@@ -1,5 +1,5 @@
 {
- "run_at": "2026-11-01T04:32:04",
+ "run_at": "2026-11-02T04:32:04",
  "items": [
   {
    "id": "B0GBZ2MDDJ",
@@ -30,7 +30,7 @@
    "status": 200,
    "title": "The Scaling Era: An Oral History of AI, 2019\u20132025",
    "format": "Kindle",
-   "price": 9.99,
+   "price": 12.99,
    "src": "format"
   },
   {
@@ -108,7 +108,7 @@
    "status": 200,
    "title": "Swallowing Clouds",
    "format": "Hardcover",
-   "price": 26.86,
+   "price": 27.94,
    "src": "buybox"
   },
   {
