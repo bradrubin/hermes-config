@@ -5,6 +5,19 @@ set -u
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:$PATH"
 cd "$HOME/.hermes" || exit 1
 echo "== $(date '+%Y-%m-%d %H:%M:%S') backup"
+# Local-only copies of data/ (TPAW plan etc.): dated, only when changed, newest 30 kept. Never goes to git (not whitelisted).
+if [ -d data ]; then
+  mkdir -p backups/data
+  for f in data/*; do
+    [ -f "$f" ] || continue
+    b="$(basename "$f")"
+    last="$(ls -t backups/data/*"__$b" 2>/dev/null | head -n 1)"
+    if [ -z "$last" ] || ! cmp -s "$f" "$last"; then
+      cp -p "$f" "backups/data/$(date '+%Y-%m-%d_%H%M%S')__$b" && echo "local copy: $b"
+    fi
+    ls -t backups/data/*"__$b" 2>/dev/null | tail -n +31 | while IFS= read -r old; do rm -f "$old"; done
+  done
+fi
 python3 ops/secrets.py redact >/dev/null || { echo "redact failed"; exit 1; }
 git add -A
 if git diff --cached --quiet; then

@@ -6,7 +6,7 @@ Files used: SKILL.md, tpaw.py, plan_path.txt, balance_source.txt, expect.txt, NO
 - Edit `plan_path.txt` to point at your plan file (kept outside Documents/Desktop/Downloads).
 - Make the original plan read-only so no model can edit it: `chmod a-w "<plan file>"`.
   (The skill only ever writes a copy, in `work/`.)
-- The plan file is NOT in git (it is outside the whitelist). Keep your own backup.
+- The plan file is NOT in git. `ops/backup.sh` keeps dated local copies in `~/.hermes/backups/data/` (newest 30, only when it changes).
 - Test in a fresh Hermes session: `tpaw-load 1468825`.
 - Old v2 files (setup.sh, report.py, load_plan.py, patch_plan.py) were removed in v3.3.2.
 
