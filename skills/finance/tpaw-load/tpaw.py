@@ -21,6 +21,7 @@ def _tpaw_main(args):
     class Stop(Exception):
         pass
 
+    cleanup = {}   # browser state to undo after the run (the browser session persists between skills)
     marks = [("start", time.time())]
     def mark(label):
         marks.append((label, time.time()))
@@ -377,7 +378,8 @@ def _tpaw_main(args):
             C("Page.enable")
         except Exception:
             pass
-        C("Page.addScriptToEvaluateOnNewDocument", source=HOOK_JS)
+        cleanup["hook"] = C("Page.addScriptToEvaluateOnNewDocument", source=HOOK_JS).get("identifier")
+        cleanup["viewport"] = True
         if not goto(URL):
             raise Stop("tpawplanner.com/guest did not finish loading")
         js("(localStorage.clear(), sessionStorage.clear(), true)")
@@ -585,6 +587,17 @@ def _tpaw_main(args):
         time.sleep(0.3)
         shot = screenshot()
     mark("verify")
+    if browser_used:   # leave the shared browser session as we found it
+        if cleanup.get("hook"):
+            try:
+                C("Page.removeScriptToEvaluateOnNewDocument", identifier=cleanup["hook"])
+            except Exception:
+                pass
+        if cleanup.get("viewport"):
+            try:
+                C("Emulation.clearDeviceMetricsOverride")
+            except Exception:
+                pass
 
     # ---------- timing ----------
     phases = [(marks[i][0], marks[i][1] - marks[i - 1][1]) for i in range(1, len(marks))]

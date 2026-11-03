@@ -1,16 +1,14 @@
 # tpaw-load v3 — maintainer notes (not read by the model)
 
-## Install (clean, so no old files linger)
-```bash
-rm -rf ~/.hermes/skills/finance/tpaw-load
-mkdir -p ~/.hermes/skills/finance/tpaw-load
-# copy in: SKILL.md  tpaw.py  plan_path.txt  expect.txt  NOTES.md
-```
-- Also delete the old `tpaw-planner-file-import` skill, so Qwen can't pick it up instead.
-- Edit `plan_path.txt` to point at your plan file.
-- Make the original plan read-only so no model can edit it again: `chmod a-w "<plan file>"`.
+## Install
+Files live in git (`skills/finance/tpaw-load/`); edit in place and roll back with git.
+Files used: SKILL.md, tpaw.py, plan_path.txt, balance_source.txt, expect.txt, NOTES.md.
+- Edit `plan_path.txt` to point at your plan file (kept outside Documents/Desktop/Downloads).
+- Make the original plan read-only so no model can edit it: `chmod a-w "<plan file>"`.
   (The skill only ever writes a copy, in `work/`.)
+- The plan file is NOT in git (it is outside the whitelist). Keep your own backup.
 - Test in a fresh Hermes session: `tpaw-load 1468825`.
+- Old v2 files (setup.sh, report.py, load_plan.py, patch_plan.py) were removed in v3.3.2.
 
 ## Why v3 is one call
 In v2, Qwen ran a stale `setup.sh`, got an error, and then improvised: it read the scripts,

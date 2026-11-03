@@ -1,7 +1,7 @@
 ---
 name: tpaw-load
 description: Run TPAW plan; report stocks % and spending
-version: 3.3.1
+version: 3.3.2
 author: Hermes Agent
 ---
 
