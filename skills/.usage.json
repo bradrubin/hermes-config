@@ -422,14 +422,14 @@
     "first_seen_at": null,
     "last_patched_at": "2026-10-21T15:19:33.757719+00:00",
     "last_reused_patch_generation": 3,
-    "last_used_at": "2026-11-03T11:30:59.131431+00:00",
-    "last_viewed_at": "2026-11-03T11:30:59.130966+00:00",
+    "last_used_at": "2026-11-03T14:14:42.614521+00:00",
+    "last_viewed_at": "2026-11-03T14:14:42.613995+00:00",
     "patch_count": 3,
     "patch_generation": 3,
     "pinned": false,
     "state": "active",
-    "use_count": 19,
-    "view_count": 8
+    "use_count": 20,
+    "view_count": 9
   },
   "spike": {
     "archived_at": null,

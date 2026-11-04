@@ -1,5 +1,5 @@
 {
- "run_at": "2026-11-02T04:32:04",
+ "run_at": "2026-11-03T07:56:24",
  "items": [
   {
    "id": "B0GBZ2MDDJ",
@@ -108,7 +108,7 @@
    "status": 200,
    "title": "Swallowing Clouds",
    "format": "Hardcover",
-   "price": 27.94,
+   "price": 29.09,
    "src": "buybox"
   },
   {
@@ -156,7 +156,7 @@
    "status": 200,
    "title": "Quantum Computing since Democritus",
    "format": "Kindle",
-   "price": 50.3,
+   "price": 49.5,
    "src": "format"
   },
   {

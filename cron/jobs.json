@@ -82,15 +82,15 @@
       "schedule_display": "every day at 5am",
       "repeat": {
         "times": null,
-        "completed": 12
+        "completed": 13
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-23T21:14:11.634594-05:00",
-      "next_run_at": "2026-11-03T05:00:00-06:00",
-      "last_run_at": "2026-11-02T05:01:31.150608-06:00",
+      "next_run_at": "2026-11-04T05:00:00-06:00",
+      "last_run_at": "2026-11-03T05:01:02.954030-06:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -104,19 +104,19 @@
       "attach_to_session": true,
       "fire_claim": null,
       "canonical_completions": [
-        "42768f99e77945da8a7703f1c7ec6166"
+        "1119544f319c4ded99653eca31b5c941"
       ],
       "last_dispatch": {
-        "scheduled_at": "2026-11-02T05:00:00-06:00",
-        "dispatched_at": "2026-11-02T05:00:59.615947-06:00",
-        "lateness_seconds": 59.6,
+        "scheduled_at": "2026-11-03T05:00:00-06:00",
+        "dispatched_at": "2026-11-03T05:00:33.744210-06:00",
+        "lateness_seconds": 33.7,
         "kind": "on_time"
       }
     },
     {
       "id": "104b30198efb",
       "name": "Spam Bypass Daily",
-      "prompt": "Run the spam-bypass skill: search Fastmail inboxes for bsrubin@stthomas.edu and bradrubin@bradrubin.com for emails from today and yesterday. Filter to Inbox only (discard Trash/Spam/Archive). For each spam candidate found, create a verbose, circular, ambiguous reply as a Draft in Fastmail using mcp__fastmail__draft_email. NEVER send the drafts.",
+      "prompt": "Run the spam-bypass skill.",
       "skills": [
         "spam-bypass"
       ],
@@ -138,15 +138,15 @@
       "schedule_display": "every day at 5:30am",
       "repeat": {
         "times": null,
-        "completed": 10
+        "completed": 11
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-24T08:34:26.007688-05:00",
-      "next_run_at": "2026-11-03T05:30:00-06:00",
-      "last_run_at": "2026-11-02T05:35:17.468361-06:00",
+      "next_run_at": "2026-11-04T05:30:00-06:00",
+      "last_run_at": "2026-11-03T05:31:29.008681-06:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -158,19 +158,19 @@
       "enabled_toolsets": null,
       "workdir": null,
       "last_dispatch": {
-        "scheduled_at": "2026-11-02T05:30:00-06:00",
-        "dispatched_at": "2026-11-02T05:30:59.616282-06:00",
-        "lateness_seconds": 59.6,
+        "scheduled_at": "2026-11-03T05:30:00-06:00",
+        "dispatched_at": "2026-11-03T05:30:33.771879-06:00",
+        "lateness_seconds": 33.8,
         "kind": "on_time"
       },
       "fire_claim": null,
       "canonical_completions": [
-        "100b0127d865478e848ea6182bf5d5ee"
+        "2cf64a9fd199428e86cb900f599f2f9e"
       ]
     },
     {
       "id": "19cfd6249997",
-      "name": "TPAW load - Monday 3 AM",
+      "name": "TPAW load - Mondays and the 1st, 3 AM",
       "prompt": "Run skill tpaw-load for the scheduled cron run (use the cron form of ARGS).",
       "skills": [
         "tpaw-load"
@@ -187,10 +187,10 @@
       "context_from": null,
       "schedule": {
         "kind": "cron",
-        "expr": "0 3 * * 1",
-        "display": "0 3 * * 1"
+        "expr": "0 3 1 * 1",
+        "display": "0 3 1 * 1"
       },
-      "schedule_display": "0 3 * * 1",
+      "schedule_display": "0 3 1 * 1",
       "repeat": {
         "times": null,
         "completed": 7
@@ -224,61 +224,6 @@
       ]
     },
     {
-      "id": "9816bae39755",
-      "name": "TPAW load - 1st of month 3 AM",
-      "prompt": "Run skill tpaw-load for the scheduled cron run (use the cron form of ARGS).",
-      "skills": [
-        "tpaw-load"
-      ],
-      "skill": "tpaw-load",
-      "model": null,
-      "provider": null,
-      "base_url": null,
-      "script": null,
-      "no_agent": false,
-      "monitor_script": null,
-      "monitor_url": null,
-      "monitor_state": null,
-      "context_from": null,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 3 1 * *",
-        "display": "0 3 1 * *"
-      },
-      "schedule_display": "0 3 1 * *",
-      "repeat": {
-        "times": null,
-        "completed": 1
-      },
-      "enabled": true,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null,
-      "created_at": "2026-10-25T08:13:58.168780-05:00",
-      "next_run_at": "2026-12-01T03:00:00-06:00",
-      "last_run_at": "2026-11-01T03:01:38.398524-06:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": null,
-      "last_delivery_unverified": null,
-      "last_failure": null,
-      "failure_streak": 0,
-      "deliver": "telegram",
-      "origin": null,
-      "enabled_toolsets": null,
-      "workdir": null,
-      "last_dispatch": {
-        "scheduled_at": "2026-11-01T03:00:00-06:00",
-        "dispatched_at": "2026-11-01T03:00:59.110961-06:00",
-        "lateness_seconds": 59.1,
-        "kind": "on_time"
-      },
-      "fire_claim": null,
-      "canonical_completions": [
-        "72acaffe6df14393897d83a3c582f31d"
-      ]
-    },
-    {
       "id": "f1b2b1ee8db4",
       "name": "tbill-roll",
       "prompt": "Run the tbill-roll skill for the scheduled cron run.",
@@ -301,15 +246,15 @@
       "schedule_display": "every day at 4am",
       "repeat": {
         "times": null,
-        "completed": 8
+        "completed": 9
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-29T12:43:54.140971-05:00",
-      "next_run_at": "2026-11-03T04:00:00-06:00",
-      "last_run_at": "2026-11-02T04:01:05.380174-06:00",
+      "next_run_at": "2026-11-04T04:00:00-06:00",
+      "last_run_at": "2026-11-03T04:00:54.026239-06:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -324,9 +269,9 @@
       "enabled_toolsets": null,
       "workdir": null,
       "last_dispatch": {
-        "scheduled_at": "2026-11-02T04:00:00-06:00",
-        "dispatched_at": "2026-11-02T04:00:59.595333-06:00",
-        "lateness_seconds": 59.6,
+        "scheduled_at": "2026-11-03T04:00:00-06:00",
+        "dispatched_at": "2026-11-03T04:00:33.713664-06:00",
+        "lateness_seconds": 33.7,
         "kind": "on_time"
       },
       "fire_claim": null,
@@ -359,15 +304,15 @@
       "schedule_display": "30 4 * * *",
       "repeat": {
         "times": null,
-        "completed": 3
+        "completed": 4
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-30T12:41:26.526914-05:00",
-      "next_run_at": "2026-11-03T04:30:00-06:00",
-      "last_run_at": "2026-11-02T04:32:09.138935-06:00",
+      "next_run_at": "2026-11-04T04:30:00-06:00",
+      "last_run_at": "2026-11-03T04:31:41.026468-06:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -379,14 +324,14 @@
       "enabled_toolsets": null,
       "workdir": null,
       "last_dispatch": {
-        "scheduled_at": "2026-11-02T04:30:00-06:00",
-        "dispatched_at": "2026-11-02T04:30:59.490000-06:00",
-        "lateness_seconds": 59.5,
+        "scheduled_at": "2026-11-03T04:30:00-06:00",
+        "dispatched_at": "2026-11-03T04:30:33.761500-06:00",
+        "lateness_seconds": 33.8,
         "kind": "on_time"
       },
       "fire_claim": null,
       "canonical_completions": [
-        "29c352d4c6a941a5aabd5c04cde3c128"
+        "0b5f4c09e7484d068ebbc61af124c533"
       ]
     },
     {
@@ -414,15 +359,15 @@
       "schedule_display": "15 4 * * *",
       "repeat": {
         "times": null,
-        "completed": 3
+        "completed": 4
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-30T14:12:07.423186-05:00",
-      "next_run_at": "2026-11-03T04:15:00-06:00",
-      "last_run_at": "2026-11-02T04:16:14.760929-06:00",
+      "next_run_at": "2026-11-04T04:15:00-06:00",
+      "last_run_at": "2026-11-03T04:16:08.876732-06:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -437,16 +382,16 @@
       "enabled_toolsets": null,
       "workdir": null,
       "last_dispatch": {
-        "scheduled_at": "2026-11-02T04:15:00-06:00",
-        "dispatched_at": "2026-11-02T04:15:59.509396-06:00",
-        "lateness_seconds": 59.5,
+        "scheduled_at": "2026-11-03T04:15:00-06:00",
+        "dispatched_at": "2026-11-03T04:15:33.631373-06:00",
+        "lateness_seconds": 33.6,
         "kind": "on_time"
       },
       "fire_claim": null,
       "canonical_completions": [
-        "7898d0182c9941dcab18dc8191e88f92"
+        "41a27149c3084ba48c0267f0da713eda"
       ]
     }
   ],
-  "updated_at": "2026-11-02T05:35:17.469778-06:00"
+  "updated_at": "2026-11-03T08:06:31.885664-06:00"
 }
