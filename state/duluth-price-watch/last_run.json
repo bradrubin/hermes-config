@@ -1,5 +1,5 @@
 {
- "run_at": "2026-11-04T04:16:04",
+ "run_at": "2026-11-05T04:16:04",
  "limit": 15.0,
  "test": false,
  "colors": [
@@ -183,8 +183,7 @@
     "SM",
     "MED",
     "LRG",
-    "XLG",
-    "2XL"
+    "XLG"
    ],
    "url": "https://www.duluthtrading.com/mens-buck-naked-boxers-81316.html?color=KNO",
    "all_sizes": false
@@ -471,7 +470,6 @@
    "kind": "pattern",
    "price": 24.95,
    "sizes": [
-    "SM",
     "MED",
     "LRG",
     "XLG",
@@ -480,7 +478,7 @@
     "4XL"
    ],
    "url": "https://www.duluthtrading.com/mens-buck-naked-boxer-briefs-76015.html?color=MHL",
-   "all_sizes": true
+   "all_sizes": false
   },
   {
    "pid": "76015",

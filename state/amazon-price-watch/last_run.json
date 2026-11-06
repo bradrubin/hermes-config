@@ -1,5 +1,5 @@
 {
- "run_at": "2026-11-04T04:31:42",
+ "run_at": "2026-11-05T04:31:42",
  "items": [
   {
    "id": "B0GBZ2MDDJ",
@@ -108,7 +108,7 @@
    "status": 200,
    "title": "Swallowing Clouds",
    "format": "Hardcover",
-   "price": 31.47,
+   "price": 33.07,
    "src": "buybox"
   },
   {
@@ -116,7 +116,7 @@
    "status": 200,
    "title": "Illustrated Cabinetmaking: How to Design and Construct Furniture That Works - Over 1300 Drawings & Diagrams for Drawers, Tables, Beds, Bookcases, Cabinets, Joints & Subassemblies",
    "format": "Paperback",
-   "price": 20.32,
+   "price": 23.29,
    "src": "buybox"
   },
   {
@@ -156,7 +156,7 @@
    "status": 200,
    "title": "Quantum Computing since Democritus",
    "format": "Kindle",
-   "price": 49.5,
+   "price": 48.94,
    "src": "format"
   },
   {
