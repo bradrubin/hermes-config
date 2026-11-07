@@ -1,5 +1,5 @@
 {
- "run_at": "2026-11-05T04:31:42",
+ "run_at": "2026-11-06T04:31:35",
  "items": [
   {
    "id": "B0GBZ2MDDJ",
@@ -60,8 +60,8 @@
    "id": "B015QIC1PW",
    "status": 200,
    "title": "Midland - ER310, Emergency Crank Weather AM/FM Radio - Red/Black",
-   "price": 79.99,
-   "src": "buybox"
+   "price": null,
+   "src": null
   },
   {
    "id": "B08N4P59FP",
@@ -108,7 +108,7 @@
    "status": 200,
    "title": "Swallowing Clouds",
    "format": "Hardcover",
-   "price": 33.07,
+   "price": 34.41,
    "src": "buybox"
   },
   {

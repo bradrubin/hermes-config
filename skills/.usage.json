@@ -6,14 +6,14 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-11-05T10:30:34.806841+00:00",
-    "last_viewed_at": "2026-11-03T13:55:19.767474+00:00",
+    "last_used_at": "2026-11-06T10:30:32.775161+00:00",
+    "last_viewed_at": "2026-11-06T10:30:32.772694+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 11,
-    "view_count": 5
+    "use_count": 13,
+    "view_count": 6
   },
   "arxiv": {
     "archived_at": null,
@@ -102,13 +102,13 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-11-05T11:00:34.773007+00:00",
+    "last_used_at": "2026-11-06T11:00:29.210487+00:00",
     "last_viewed_at": "2026-10-24T02:14:45.415957+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 16,
+    "use_count": 17,
     "view_count": 1
   },
   "dogfood": {
@@ -134,13 +134,13 @@
     "first_seen_at": null,
     "last_patched_at": null,
     "last_reused_patch_generation": 0,
-    "last_used_at": "2026-11-05T10:15:34.788960+00:00",
+    "last_used_at": "2026-11-06T10:15:29.310833+00:00",
     "last_viewed_at": "2026-11-03T13:51:43.263911+00:00",
     "patch_count": 0,
     "patch_generation": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 21,
+    "use_count": 22,
     "view_count": 15
   },
   "email-inbox-triage": {
@@ -422,14 +422,14 @@
     "first_seen_at": null,
     "last_patched_at": "2026-10-21T15:19:33.757719+00:00",
     "last_reused_patch_generation": 3,
-    "last_used_at": "2026-11-05T11:30:34.856341+00:00",
-    "last_viewed_at": "2026-11-03T14:14:42.613995+00:00",
+    "last_used_at": "2026-11-06T20:17:29.331784+00:00",
+    "last_viewed_at": "2026-11-06T20:17:29.329046+00:00",
     "patch_count": 3,
     "patch_generation": 3,
     "pinned": false,
     "state": "active",
-    "use_count": 22,
-    "view_count": 9
+    "use_count": 24,
+    "view_count": 10
   },
   "spike": {
     "archived_at": null,
